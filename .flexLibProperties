@@ -2,6 +2,14 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.xgame.core.center.BaseCenter"/>
+    <classEntry path="com.xgame.core.center.GameCenter"/>
+    <classEntry path="com.xgame.core.center.CommandCenter"/>
+    <classEntry path="com.xgame.common.commands.CommandCollector"/>
+    <classEntry path="com.xgame.common.interfaces.protocols.IReceiving"/>
+    <classEntry path="com.xgame.common.interfaces.protocols.ISending"/>
+    <classEntry path="com.xgame.common.interfaces.protocols.IProtocol"/>
+    <classEntry path="com.xgame.common.commands.CommandList"/>
+    <classEntry path="com.xgame.common.network.socket.SmartSocket"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
