@@ -10,6 +10,8 @@
     <classEntry path="com.xgame.common.interfaces.protocols.IProtocol"/>
     <classEntry path="com.xgame.common.commands.CommandList"/>
     <classEntry path="com.xgame.common.network.socket.SmartSocket"/>
+    <classEntry path="com.xgame.events.net.SocketEvent"/>
+    <classEntry path="com.xgame.core.center.ResourceCenter"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

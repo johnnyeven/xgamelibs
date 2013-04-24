@@ -1,5 +1,7 @@
 package com.xgame.common.network.socket
 {
+	import com.xgame.events.net.SocketEvent;
+	
 	import flash.errors.IllegalOperationError;
 	import flash.events.ProgressEvent;
 	import flash.net.Socket;
@@ -77,6 +79,7 @@ package com.xgame.common.network.socket
 			{
 				_cache.readBytes(_byteArray, 0, _cache.bytesAvailable);
 			}
+			data.position = 0;
 			data.readBytes(_byteArray, _byteArray.length, data.bytesAvailable);
 			
 			if(_contentLength == 0 && _byteArray.bytesAvailable < 6)
@@ -110,6 +113,59 @@ package com.xgame.common.network.socket
 				data.readBytes(_byteArray1, 0, data.bytesAvailable);
 				_cache = _byteArray1;
 			}
+			else
+			{
+				_byteArray2 = new ByteArray();
+				_byteArray2.endian = Endian.BIG_ENDIAN;
+				_protocolId = data.readShort();
+				if(_contentLength - 2 > 0)
+				{
+					data.readBytes(_byteArray2, 0, _contentLength - 2);
+				}
+				_byteArray2.position = 0;
+				_contentLength = 0;
+				_cache.clear();
+				
+				if(_callback != null)
+				{
+					_callback(_protocolId, _byteArray2);
+				}
+				
+				if(data.bytesAvailable > 0)
+				{
+					_byteArray3 = new ByteArray();
+					_byteArray3.endian = Endian.BIG_ENDIAN;
+					data.readBytes(_byteArray3, 0, data.bytesAvailable);
+					assembly(_byteArray3);
+				}
+			}
 		}
+
+		public function send(data: ByteArray): void
+		{
+			if(!connected)
+			{
+				return;
+			}
+			data.position = 0;
+			writeInt(data.length);
+			writeBytes(data, 0, data.bytesAvailable);
+			flush();
+		}
+
+		public function get ping():uint
+		{
+			return _ping;
+		}
+
+		public function set ping(value:uint):void
+		{
+			if(_ping != value)
+			{
+				_ping = value;
+				dispatchEvent(new SocketEvent(SocketEvent.PING_REFRESH));
+			}
+		}
+
 	}
 }
