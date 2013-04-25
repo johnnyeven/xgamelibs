@@ -2,7 +2,6 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.xgame.core.center.BaseCenter"/>
-    <classEntry path="com.xgame.core.center.GameCenter"/>
     <classEntry path="com.xgame.core.center.CommandCenter"/>
     <classEntry path="com.xgame.common.commands.CommandCollector"/>
     <classEntry path="com.xgame.common.interfaces.protocols.IReceiving"/>
@@ -12,6 +11,13 @@
     <classEntry path="com.xgame.common.network.socket.SmartSocket"/>
     <classEntry path="com.xgame.events.net.SocketEvent"/>
     <classEntry path="com.xgame.core.center.ResourceCenter"/>
+    <classEntry path="com.xgame.utils.Reflection"/>
+    <classEntry path="com.xgame.utils.manager.TimerManager"/>
+    <classEntry path="com.xgame.protocols.RuleRouter"/>
+    <classEntry path="com.xgame.protocols.Rule"/>
+    <classEntry path="com.xgame.common.commands.CommandBase"/>
+    <classEntry path="com.xgame.common.commands.receiving.ReceivingBase"/>
+    <classEntry path="com.xgame.common.commands.sending.SendingBase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
