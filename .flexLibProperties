@@ -18,6 +18,9 @@
     <classEntry path="com.xgame.common.commands.CommandBase"/>
     <classEntry path="com.xgame.common.commands.receiving.ReceivingBase"/>
     <classEntry path="com.xgame.common.commands.sending.SendingBase"/>
+    <classEntry path="com.xgame.common.pool.IPool"/>
+    <classEntry path="com.xgame.common.pool.ResourcePool"/>
+    <classEntry path="com.xgame.common.display.ResourceData"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
