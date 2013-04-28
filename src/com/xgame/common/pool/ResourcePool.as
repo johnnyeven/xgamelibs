@@ -1,5 +1,6 @@
 package com.xgame.common.pool
 {
+	import com.xgame.common.display.ResourceData;
 	import com.xgame.utils.Reflection;
 	
 	import flash.display.BitmapData;
@@ -10,6 +11,7 @@ package com.xgame.common.pool
 	public class ResourcePool extends Object implements IPool
 	{
 		private var _pool: Dictionary;
+		private var _dataPool: Dictionary;
 		private static var _instance: ResourcePool;
 		private static var _allowInstance: Boolean = false;
 		
@@ -22,6 +24,7 @@ package com.xgame.common.pool
 				return;
 			}
 			_pool = new Dictionary();
+			_dataPool = new Dictionary();
 		}
 		
 		public static function get instance(): ResourcePool
@@ -79,6 +82,23 @@ package com.xgame.common.pool
 				add(name, _cache);
 			}
 			return _cache;
+		}
+		
+		public function getResourceData(name: String): ResourceData
+		{
+			var _resourceData: ResourceData;
+			if(_dataPool.hasOwnProperty(name))
+			{
+				_resourceData = _dataPool[name];
+			}
+			else
+			{
+				_resourceData = new ResourceData();
+				var _bitmapData: BitmapData = getBitmapData(name);
+				_resourceData.getResource(_bitmapData, _bitmapData["frameLine"], _bitmapData["frameTotal"], _bitmapData["fps"]);
+				_dataPool[name] = _resourceData;
+			}
+			return _resourceData;
 		}
 	}
 }

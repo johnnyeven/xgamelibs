@@ -11,8 +11,7 @@ package com.xgame.common.display
 		 * 原始位图
 		 */
 		protected var _bitmap: BitmapData;
-		protected var _bitmapArray: Vector.<Vector.<BitmapData>>;
-		protected var _currentAction: int = 0;
+		protected var _frameArray: Vector.<Vector.<BitmapFrame>>;
 		protected var _frameLine: uint = 1;
 		protected var _frameTotal: uint = 1;
 		protected var _fps: Number = 0;
@@ -27,9 +26,9 @@ package com.xgame.common.display
 		/**
 		 * 分解后的位图
 		 */
-		public function get bitmapArray():Vector.<Vector.<BitmapData>>
+		public function get bitmapArray():Vector.<Vector.<BitmapFrame>>
 		{
-			return _bitmapArray;
+			return _frameArray;
 		}
 		
 		/**
@@ -89,30 +88,47 @@ package com.xgame.common.display
 		}
 		
 		/**
-		 * 当前的动作
-		 */
-		public function get currentAction():int
-		{
-			return _currentAction;
-		}
-		
-		/**
 		 * 分解原始位图切成小片
 		 */
-		private function prepareBitmapArray(): Vector.<Vector.<BitmapData>>
+		private function prepareBitmapArray(): Vector.<Vector.<BitmapFrame>>
 		{
 			if(_bitmap != null)
 			{
-				var bmArray: Vector.<Vector.<BitmapData>> = new Vector.<Vector.<BitmapData>>();
+				var frameConfig: Array;
+				try
+				{
+					frameConfig = _bitmap["frameConfig"] as Array;
+				}
+				catch(err: Error)
+				{
+					frameConfig = null;
+				}
+				var bmArray: Vector.<Vector.<BitmapFrame>> = new Vector.<Vector.<BitmapFrame>>();
 				for(var y: uint = 0; y < _frameLine; y++)
 				{
-					var line: Vector.<BitmapData> = new Vector.<BitmapData>();
+					var line: Vector.<BitmapFrame> = new Vector.<BitmapFrame>();
 					for(var x: uint = 0; x < _frameTotal; x++)
 					{
 						var bm: BitmapData = new BitmapData(_frameWidth, _frameHeight, true, 0x00000000);
 						var rect: Rectangle = new Rectangle(x * _frameWidth, y * _frameHeight, _frameWidth, _frameHeight);
 						bm.copyPixels(_bitmap, rect, new Point(), null, null, true);
-						line.push(bm);
+						
+						var _frame: BitmapFrame = new BitmapFrame();
+						_frame.bitmapData = bm;
+						
+						if(frameConfig != null)
+						{
+							_frame.offsetX = frameConfig[y][x].offsetX;
+							_frame.offsetY = frameConfig[y][x].offsetY;
+							_frame.label = frameConfig[y][x].label;
+						}
+						else
+						{
+							_frame.offsetX = 0;
+							_frame.offsetY = 0;
+							_frame.label = "";
+						}
+						line.push(_frame);
 					}
 					bmArray.push(line);
 				}
@@ -136,11 +152,12 @@ package com.xgame.common.display
 			_fps = fps;
 			_bitmap = data;
 			
-			_bitmapArray = prepareBitmapArray();
-			if(_bitmapArray != null)
-			{
-				_bitmap = null;
-			}
+			_frameArray = prepareBitmapArray();
+//			if(_frameArray != null)
+//			{
+//				_bitmap.dispose();
+//				_bitmap = null;
+//			}
 		}
 		
 		/**
@@ -148,13 +165,13 @@ package com.xgame.common.display
 		 */
 		public function render(target: Bitmap, line: uint, frame: uint): void
 		{
-			if(_bitmapArray != null)
+			if(_frameArray == null)
 			{
 				target.bitmapData = _bitmap;
 			}
 			else
 			{
-				target.bitmapData = _bitmapArray[line][frame];
+				target.bitmapData = _frameArray[line][frame].bitmapData;
 			}
 		}
 		
@@ -168,12 +185,12 @@ package com.xgame.common.display
 			{
 				for(var x: uint = 0; x < _frameTotal; x++)
 				{
-					_bitmapArray[y][x].dispose();
+					_frameArray[y][x].dispose();
 				}
-				_bitmapArray[y].splice(0, _frameTotal);
+				_frameArray[y].splice(0, _frameTotal);
 			}
-			_bitmapArray.splice(0, _frameLine);
-			_bitmapArray = null;
+			_frameArray.splice(0, _frameLine);
+			_frameArray = null;
 			_rect = null;
 		}
 	}

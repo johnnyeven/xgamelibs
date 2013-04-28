@@ -21,6 +21,11 @@
     <classEntry path="com.xgame.common.pool.IPool"/>
     <classEntry path="com.xgame.common.pool.ResourcePool"/>
     <classEntry path="com.xgame.common.display.ResourceData"/>
+    <classEntry path="com.xgame.common.display.StaticDisplay"/>
+    <classEntry path="com.xgame.common.display.BitmapDisplay"/>
+    <classEntry path="com.xgame.common.display.BitmapMovieDispaly"/>
+    <classEntry path="com.xgame.common.display.BitmapFrame"/>
+    <classEntry path="com.xgame.common.display.renders.Render"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
