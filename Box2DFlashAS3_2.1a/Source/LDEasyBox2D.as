@@ -49,6 +49,8 @@ package
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.display.Stage;
+
 	/**
 	 * ...
 	 * @author ladeng6666
@@ -160,7 +162,7 @@ package
 			//3.创建敢提形状需求b2ShapeDef的子类
 			var fixtureRequest:b2FixtureDef = new b2FixtureDef();
 			fixtureRequest.density = 3;
-			fixtureRequest.friction = 0.3;
+			fixtureRequest.friction = 0.7;
 			fixtureRequest.restitution = 0.2;
 			fixtureRequest.shape = shapeBox;
 			
@@ -291,7 +293,7 @@ package
 			var fixtureDef: b2FixtureDef = new b2FixtureDef();
 			fixtureDef.shape = fixtureShape;
 			fixtureDef.density = 0;
-			fixtureDef.friction = .3;
+			fixtureDef.friction = .7;
 			fixtureDef.restitution = .2;
 			staticBody.CreateFixture(fixtureDef);
 			
@@ -306,7 +308,13 @@ package
 		public static function createWrapWall(world:b2World,canvas:DisplayObject):void {
 			var w:Number = canvas.width;
 			var h:Number = canvas.height;
-			var wallThick:Number = 20;//in pixels
+			var wallThick:Number = 10;//in pixels
+			
+			if(canvas is Stage)
+			{
+				w = (canvas as Stage).stageWidth;
+				h = (canvas as Stage).stageHeight;
+			}
 			
 			createBox(world, w / 2, 0, w , wallThick, true);
 			createBox(world, w / 2, h, w , wallThick, true);
