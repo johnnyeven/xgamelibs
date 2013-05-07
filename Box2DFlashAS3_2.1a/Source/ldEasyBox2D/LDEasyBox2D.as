@@ -22,6 +22,7 @@ package  ldEasyBox2D
 	import Box2D.Collision.Shapes.b2CircleShape;
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Common.UserDataBase;
 	import Box2D.Dynamics.Joints.b2MouseJoint;
 	import Box2D.Dynamics.Joints.b2MouseJointDef;
 	import Box2D.Dynamics.Joints.b2RevoluteJointDef;
@@ -38,6 +39,7 @@ package  ldEasyBox2D
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+
 	/**
 	 * ...
 	 * @author ladeng6666
@@ -91,10 +93,13 @@ package  ldEasyBox2D
 			for (var body:b2Body = world.GetBodyList(); body; body=body.GetNext()) {
 				if (body.GetUserData() != null) {
 					var graphic:DisplayObject = body.GetUserData().graphic;
-					//根据刚体的坐标个角度，更新绑定的userData
-					graphic.x = body.GetPosition().x * pixelPerMeter;
-					graphic.y = body.GetPosition().y * pixelPerMeter;
-					graphic.rotation = body.GetAngle() * 180 / Math.PI;
+					if(graphic != null)
+					{
+						//根据刚体的坐标个角度，更新绑定的userData
+						graphic.x = body.GetPosition().x * pixelPerMeter;
+						graphic.y = body.GetPosition().y * pixelPerMeter;
+						graphic.rotation = body.GetAngle() * 180 / Math.PI;
+					}
 				}
 			}
 			if (mouseJoint != null) {
@@ -160,7 +165,7 @@ package  ldEasyBox2D
 			var fixtureRequest:b2FixtureDef = new b2FixtureDef();
 			fixtureRequest.density = 3;
 			fixtureRequest.friction = 0.3;
-			fixtureRequest.restitution = 0.2;
+			fixtureRequest.restitution = 0;
 			fixtureRequest.shape = shapeBox;
 			fixtureRequest.isSensor = isSensor;
 			if (filter != null) {
@@ -206,7 +211,7 @@ package  ldEasyBox2D
 				radius:Number, 
 				isStatic:Boolean = false, 
 				isFixed : Boolean = false,
-				userData:LDEasyUserData= null, 
+				userData: UserDataBase= null, 
 				isSensor:Boolean = false, 
 				filter:b2FilterData = null
 			):b2Body {
@@ -225,7 +230,7 @@ package  ldEasyBox2D
 			var fixtureRequest:b2FixtureDef = new b2FixtureDef();
 			fixtureRequest.density = 3;
 			fixtureRequest.friction = 0.3;
-			fixtureRequest.restitution = 0.2;
+			fixtureRequest.restitution = 0;
 			fixtureRequest.shape = shapeCircle;
 			fixtureRequest.isSensor = isSensor;
 			if ( filter != null) {
@@ -248,7 +253,7 @@ package  ldEasyBox2D
 						rotation:Number = 0, 
 						isStatic:Boolean = false, 
 						isFixed : Boolean = false,
-						userData:LDEasyUserData=null):b2Body {
+						userData: UserDataBase=null):b2Body {
 			//1.创建刚体需求b2BodyDef
 			var bodyRequest:b2BodyDef = new b2BodyDef();
 			bodyRequest.type = isStatic? b2Body.b2_staticBody:b2Body.b2_dynamicBody;
@@ -276,7 +281,7 @@ package  ldEasyBox2D
 			var fixtureRequest:b2FixtureDef = new b2FixtureDef();
 			fixtureRequest.density = 3;
 			fixtureRequest.friction = 0.3;
-			fixtureRequest.restitution = 0.2;
+			fixtureRequest.restitution = 0;
 			fixtureRequest.shape = regularShape;
 			
 			var regularBody:b2Body = world.CreateBody(bodyRequest);
@@ -314,7 +319,7 @@ package  ldEasyBox2D
 			var fixtureRequest:b2FixtureDef = new b2FixtureDef();
 			fixtureRequest.density = 3;
 			fixtureRequest.friction = 0.3;
-			fixtureRequest.restitution = 0.2;
+			fixtureRequest.restitution = 0;
 			//创建一个Separator对象
 			var separator:b2Separator = new b2Separator();
 			//验证顶点是否符合创建多边形的标准
@@ -364,10 +369,13 @@ package  ldEasyBox2D
 			var h:Number = stage.stageHeight;
 			var wallThick:Number = 20;//in pixels
 			
-			createBox( w / 2, 0, w , wallThick, true);
-			createBox( w / 2, h, w , wallThick, true);
-			createBox( 0, h / 2, wallThick, h , true);
-			createBox( w, h / 2, wallThick, h , true);
+			var userData: UserDataBase = new UserDataBase({
+				name: "ground"
+			});
+			createBox( w / 2, 0, w , wallThick, true, false, userData);
+			createBox( w / 2, h, w , wallThick, true, false, userData);
+			createBox( 0, h / 2, wallThick, h , true, false, userData);
+			createBox( w, h / 2, wallThick, h , true, false, userData);
 		}
 		/**
 		 * 获取Box2D世界中鼠标下的刚体
@@ -423,13 +431,10 @@ package  ldEasyBox2D
 				world.DestroyJoint(mouseJoint);
 			}
 		}
-		private static function setUserData(body:b2Body, userData:LDEasyUserData):void {
+		private static function setUserData(body:b2Body, userData: UserDataBase):void {
 			if(userData!=null){
-				userData.body=body;
-				userData.createGraphic();
 				body.SetUserData(userData);
 				updateWorld();
-				stage.addChild(userData.graphic);
 			}
 		}
 		public static function version():void {
