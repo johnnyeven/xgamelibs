@@ -26,6 +26,8 @@
     <classEntry path="com.xgame.common.display.BitmapMovieDispaly"/>
     <classEntry path="com.xgame.common.display.BitmapFrame"/>
     <classEntry path="com.xgame.common.display.renders.Render"/>
+    <classEntry path="com.xgame.core.scene.Scene"/>
+    <classEntry path="com.xgame.core.Camera"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

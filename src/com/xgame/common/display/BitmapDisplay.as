@@ -41,6 +41,11 @@ package com.xgame.common.display
 			mouseEnabled = false;
 		}
 		
+		public function updateController(): void
+		{
+			
+		}
+		
 		public function update(): void
 		{
 			if(_buffer != null && _render != null && inUse)
