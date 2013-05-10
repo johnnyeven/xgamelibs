@@ -28,6 +28,7 @@
     <classEntry path="com.xgame.common.display.renders.Render"/>
     <classEntry path="com.xgame.core.scene.Scene"/>
     <classEntry path="com.xgame.core.Camera"/>
+    <classEntry path="com.xgame.core.map.Map"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

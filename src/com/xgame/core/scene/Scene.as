@@ -3,6 +3,8 @@ package com.xgame.core.scene
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.core.Camera;
+	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -41,6 +43,9 @@ package com.xgame.core.scene
 			_objectList = new Array();
 			_renderList = new Array();
 			
+			_layerEffect = new Sprite();
+			_container.addChild(_layerEffect);
+			
 			initializeBuffer();
 		}
 		
@@ -51,27 +56,64 @@ package com.xgame.core.scene
 		
 		public function addObject(value: BitmapDisplay): void
 		{
-			
+			if(_objectList.indexOf(value) > -1)
+			{
+				return;
+			}
+			_objectList.push(value);
+			if(Camera.instance.cameraView.contains(value.positionX, value.positionY))
+			{
+				pushRenderList(value);
+			}
 		}
 		
 		public function removeObject(value: BitmapDisplay): void
 		{
-			
+			var index: int = _objectList.indexOf(value);
+			if(index > -1)
+			{
+				_objectList.splice(index, 1);
+			}
+			pullRenderList(value);
+			value.dispose();
+			value = null;
 		}
 		
 		public function pushRenderList(value: BitmapDisplay): void
 		{
-			
+			if(_renderList.indexOf(value) > -1)
+			{
+				return;
+			}
+			_renderList.push(value);
+			_container.addChild(value);
+			value.NSCamera::inScene = true;
+			value.NSCamera::shadeIn();
 		}
 		
 		public function pullRenderList(value: BitmapDisplay): void
 		{
+			var index: int = _renderList.indexOf(value);
+			if(index > -1)
+			{
+				_renderList.splice(index, 1);
+			}
 			
+			if(_container.contains(value))
+			{
+				_container.removeChild(value);
+				value.NSCamera::inScene = false;
+				value.NSCamera::shadeOut();
+			}
 		}
 		
 		public function getDisplay(value: uint): BitmapDisplay
 		{
-			return null;
+			if(value > _objectList.length)
+			{
+				return null;
+			}
+			return _objectList[value] as BitmapDisplay;
 		}
 		
 		public function get objectList(): Array
@@ -147,7 +189,14 @@ package com.xgame.core.scene
 				
 				_container.setChildIndex(_mapGround, 0);
 				_lastZSortTime = GlobalContextConfig.Timer;
+				
+				this.NSCamera::cut();
 			}
+			else if(Camera.NSCamera::needCut)
+			{
+				this.NSCamera::cut();
+			}
+			
 			
 			while(true)
 			{
@@ -170,6 +219,24 @@ package com.xgame.core.scene
 					break;
 				}
 			}
+			Camera.instance.update();
+		}
+		
+		NSCamera function cut(): void
+		{
+			var item: BitmapDisplay;
+			for each(item in _objectList)
+			{
+				if(Camera.instance.cameraView.contains(item.positionX, item.positionY))
+				{
+					pushRenderList(item);
+				}
+				else
+				{
+					pullRenderList(item);
+				}
+			}
+			Camera.NSCamera::needCut = false;
 		}
 		
 		public function dispose(): void

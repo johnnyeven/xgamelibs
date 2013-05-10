@@ -1,7 +1,10 @@
 package com.xgame.core
 {
 	import com.xgame.common.display.BitmapDisplay;
+	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.configuration.MapContextConfig;
 	import com.xgame.core.scene.Scene;
+	import com.xgame.ns.NSCamera;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Rectangle;
@@ -16,6 +19,7 @@ package com.xgame.core
 		protected var _y: Number;
 		protected var _scene: Scene;
 		protected var _focus: BitmapDisplay;
+		NSCamera static var needCut: Boolean = false;
 		
 		public function Camera(value: Scene)
 		{
@@ -53,6 +57,10 @@ package com.xgame.core
 		public function set x(value:Number):void
 		{
 			_x = value;
+			
+			var offset: Number = MapContextConfig.MapSize.x - GlobalContextConfig.Width;
+			_x = _x < 0 ? 0 : _x;
+			_x = _x > offset ? offset : _x;
 		}
 
 		public function get y():Number
@@ -63,11 +71,63 @@ package com.xgame.core
 		public function set y(value:Number):void
 		{
 			_y = value;
+			
+			var offset: Number = MapContextConfig.MapSize.y - GlobalContextConfig.Height;
+			_y = _y < 0 ? 0 : _y;
+			_y = _y > offset ? offset : _y;
 		}
 
 		public function get scene():Scene
 		{
 			return _scene;
 		}
+
+		public function get cameraView():Rectangle
+		{
+			return _cameraView;
+		}
+		
+		public function get cameraCutView():Rectangle
+		{
+			var tempX: int = _x;
+			var tempY: int = _y;
+			
+			tempX -= MapContextConfig.TileSize.x;
+			tempY -= MapContextConfig.TileSize.y;
+			
+			tempX = tempX < 0 ? 0 : tempX;
+			tempY = tempY < 0 ? 0 : tempY;
+			
+			_cameraCutView.x = tempX;
+			_cameraCutView.y = tempY;
+			_cameraCutView.width = GlobalContextConfig.Width + MapContextConfig.TileSize.x * 2;
+			_cameraCutView.height = GlobalContextConfig.Height + MapContextConfig.TileSize.y * 2;
+			
+			return _cameraCutView;
+		}
+		
+		public function focus(value: BitmapDisplay): void
+		{
+			_focus.beFocus = false;
+			_focus = value;
+			
+			update();
+			_scene.NSCamera::cut();
+			//TODO map.render();
+		}
+		
+		public function update(): void
+		{
+			if(_focus != null)
+			{
+				x = _focus.positionX - (GlobalContextConfig.Width >> 1);
+				y = _focus.positionY - (GlobalContextConfig.Height >> 1);
+			}
+			_cameraView.x = _x;
+			_cameraView.y = _y;
+			_cameraView.width = GlobalContextConfig.Width;
+			_cameraView.height = GlobalContextConfig.Height;
+		}
+
 	}
 }

@@ -2,6 +2,8 @@ package com.xgame.common.display
 {
 	import com.greensock.TweenLite;
 	import com.xgame.common.display.renders.Render;
+	import com.xgame.core.Camera;
+	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
 	import flash.events.Event;
@@ -12,7 +14,6 @@ package com.xgame.common.display
 		public var objectId: String;
 		public var objectName: String;
 		public var canBeAttack: Boolean = false;
-		public var inUse: Boolean = false;
 		public var beFocus: Boolean = false;
 		protected var _graphic: ResourceData;
 		protected var _render: Render;
@@ -26,6 +27,7 @@ package com.xgame.common.display
 		private static const CENTER: uint = 0;
 		private static const TOP_LEFT: uint = 1;
 		private static const BOTTOM_LEFT: uint = 2;
+		NSCamera var inScene: Boolean = false;
 		
 		public function BitmapDisplay()
 		{
@@ -48,7 +50,7 @@ package com.xgame.common.display
 		
 		public function update(): void
 		{
-			if(_buffer != null && _render != null && inUse)
+			if(_buffer != null && _render != null && this.NSCamera::inScene)
 			{
 				_render.render(this);
 			}
@@ -68,7 +70,7 @@ package com.xgame.common.display
 			}
 		}
 		
-		public function shadeOut(callback: Function = null): void
+		NSCamera function shadeOut(callback: Function = null): void
 		{
 			TweenLite.killTweensOf(this);
 			TweenLite.to(this, .5, {
@@ -77,7 +79,7 @@ package com.xgame.common.display
 			});
 		}
 		
-		public function shadeIn(callback: Function = null): void
+		NSCamera function shadeIn(callback: Function = null): void
 		{
 			TweenLite.killTweensOf(this);
 			TweenLite.to(this, .5, {
@@ -94,14 +96,14 @@ package com.xgame.common.display
 				_graphic = null;
 			}
 			
-			if(!inUse)
+			if(!this.NSCamera::inScene)
 			{
 				canBeAttack = false;
 			}
 			else
 			{
-				inUse = false;
-				shadeOut(dispose);
+				this.NSCamera::inScene = false;
+				this.NSCamera::shadeOut(dispose);
 			}
 		}
 		
@@ -143,6 +145,13 @@ package com.xgame.common.display
 		public function set positionX(value:int):void
 		{
 			_positionX = value;
+			
+			if(!Camera.NSCamera::needCut && 
+				Camera.instance.cameraView != null && 
+				Camera.instance.cameraView.contains(_positionX, _positionY))
+			{
+				Camera.NSCamera::needCut = true;
+			}
 		}
 
 		public function get positionY():int
@@ -154,6 +163,13 @@ package com.xgame.common.display
 		{
 			_positionY = value;
 			_zIndex = value;
+			
+			if(!Camera.NSCamera::needCut && 
+				Camera.instance.cameraView != null && 
+				Camera.instance.cameraView.contains(_positionX, _positionY))
+			{
+				Camera.NSCamera::needCut = true;
+			}
 		}
 
 		public function get zIndex(): uint
