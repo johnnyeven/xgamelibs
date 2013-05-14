@@ -106,14 +106,19 @@ package com.xgame.core
 			return _cameraCutView;
 		}
 		
-		public function focus(value: BitmapDisplay): void
+		public function set focus(value: BitmapDisplay): void
 		{
 			_focus.beFocus = false;
 			_focus = value;
 			
 			update();
 			_scene.NSCamera::cut();
-			//TODO map.render();
+			//TODO _map.update();
+		}
+		
+		public function get focus(): BitmapDisplay
+		{
+			return _focus;
 		}
 		
 		public function update(): void

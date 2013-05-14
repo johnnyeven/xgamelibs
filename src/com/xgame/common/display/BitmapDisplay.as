@@ -19,6 +19,7 @@ package com.xgame.common.display
 		protected var _render: Render;
 		protected var _buffer: Bitmap;
 		protected var _rect: Rectangle
+		protected var _action: int;
 		protected var _positionX: int;
 		protected var _positionY: int;
 		protected var _zIndex: uint = 0;
@@ -208,5 +209,14 @@ package com.xgame.common.display
 			_render.target = this;
 		}
 
+		public function get action():int
+		{
+			return _action;
+		}
+
+		public function set action(value:int):void
+		{
+			_action = value;
+		}
 	}
 }

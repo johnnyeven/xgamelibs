@@ -2,6 +2,7 @@ package com.xgame.core.center
 {
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
+	import com.greensock.loading.SWFLoader;
 	import com.greensock.loading.core.LoaderCore;
 	
 	import flash.errors.IllegalOperationError;
@@ -34,12 +35,13 @@ package com.xgame.core.center
 			return _instance;
 		}
 		
-		public function load(name: String,
-							 showProgressBar: Boolean = false,
-							 progressBarTitle: String = "",
-							 onComplete: Function = null,
-							 onProgress: Function = null,
-							 onError: Function = null): void
+		public function load(
+							name: String,
+							vars: Object = null,
+							onComplete: Function = null,
+							onProgress: Function = null,
+							onError: Function = null
+		): void
 		{
 			if(onComplete != null)
 			{
@@ -54,10 +56,18 @@ package com.xgame.core.center
 				addTrigger(name + "_error", onError);
 			}
 			var _item: LoaderCore = LoaderMax.getLoader(name);
-			_item.addEventListener(LoaderEvent.COMPLETE, onLoadComplete);
-			_item.addEventListener(LoaderEvent.PROGRESS, onLoadProgress);
-			_item.addEventListener(LoaderEvent.IO_ERROR, onLoadIOError);
-			_item.load();
+			if(_item != null)
+			{
+				_item.addEventListener(LoaderEvent.COMPLETE, onLoadComplete);
+				_item.addEventListener(LoaderEvent.PROGRESS, onLoadProgress);
+				_item.addEventListener(LoaderEvent.IO_ERROR, onLoadIOError);
+				_item.load();
+			}
+			else
+			{
+				_item = new SWFLoader(name);
+				_item.vars = vars;
+			}
 		}
 		
 		private function onLoadComplete(evt: LoaderEvent): void
