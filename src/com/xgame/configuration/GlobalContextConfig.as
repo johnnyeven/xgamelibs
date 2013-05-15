@@ -53,15 +53,15 @@ package com.xgame.configuration
 		/**
 		 * 资源目录
 		 */
-		public static const RESOURCE_PATH: String = 'resources/';
+		public static const RESOURCE_PATH: String = 'assets/';
 		/**
 		 * 地图资源目录
 		 */
-		public static const MAP_RES_PATH: String = 'resources/maps/';
+		public static const MAP_RES_PATH: String = 'assets/maps/';
 		/**
 		 * 角色资源目录
 		 */
-		public static const CHAR_RES_PATH: String = 'resources/characters/';
+		public static const CHAR_RES_PATH: String = 'assets/characters/';
 		
 		public function GlobalContextConfig() 
 		{

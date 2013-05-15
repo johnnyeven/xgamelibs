@@ -1,5 +1,6 @@
 package com.xgame.common.display
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.TweenLite;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.core.Camera;
@@ -165,6 +166,10 @@ package com.xgame.common.display
 			_positionY = value;
 			_zIndex = value;
 			
+			CONFIG::DebugMode
+			{
+				MonsterDebugger.trace(this, Camera.instance.cameraView);
+			}
 			if(!Camera.NSCamera::needCut && 
 				Camera.instance.cameraView != null && 
 				Camera.instance.cameraView.contains(_positionX, _positionY))

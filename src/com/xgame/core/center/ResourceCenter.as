@@ -4,6 +4,7 @@ package com.xgame.core.center
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
 	import com.greensock.loading.core.LoaderCore;
+	import com.greensock.loading.utils.LoaderUtils;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.utils.Dictionary;
@@ -56,18 +57,24 @@ package com.xgame.core.center
 				addTrigger(name + "_error", onError);
 			}
 			var _item: LoaderCore = LoaderMax.getLoader(name);
-			if(_item != null)
+			if(_item == null)
 			{
-				_item.addEventListener(LoaderEvent.COMPLETE, onLoadComplete);
-				_item.addEventListener(LoaderEvent.PROGRESS, onLoadProgress);
-				_item.addEventListener(LoaderEvent.IO_ERROR, onLoadIOError);
-				_item.load();
+				_item = LoaderUtils.generateLoader(name);
+				if(_item != null)
+				{
+					_item.vars = vars;
+				}
+				else
+				{
+					//TODO 换成Debug
+					trace('url error');
+					return;
+				}
 			}
-			else
-			{
-				_item = new SWFLoader(name);
-				_item.vars = vars;
-			}
+			_item.addEventListener(LoaderEvent.COMPLETE, onLoadComplete);
+			_item.addEventListener(LoaderEvent.PROGRESS, onLoadProgress);
+			_item.addEventListener(LoaderEvent.IO_ERROR, onLoadIOError);
+			_item.load();
 		}
 		
 		private function onLoadComplete(evt: LoaderEvent): void

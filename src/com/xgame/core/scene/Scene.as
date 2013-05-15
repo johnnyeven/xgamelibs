@@ -187,10 +187,8 @@ package com.xgame.core.scene
 					}
 				}
 				
-				_container.setChildIndex(_mapGround, 0);
+//				_container.setChildIndex(_mapGround, 0);
 				_lastZSortTime = GlobalContextConfig.Timer;
-				
-				this.NSCamera::cut();
 			}
 			else if(Camera.NSCamera::needCut)
 			{

@@ -30,6 +30,7 @@
     <classEntry path="com.xgame.core.Camera"/>
     <classEntry path="com.xgame.core.map.Map"/>
     <classEntry path="com.xgame.enum.Action"/>
+    <classEntry path="com.greensock.loading.utils.LoaderUtils"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
