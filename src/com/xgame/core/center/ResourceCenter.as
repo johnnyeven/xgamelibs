@@ -62,6 +62,7 @@ package com.xgame.core.center
 				_item = LoaderUtils.generateLoader(name);
 				if(_item != null)
 				{
+					_item.name = name;
 					_item.vars = vars;
 				}
 				else

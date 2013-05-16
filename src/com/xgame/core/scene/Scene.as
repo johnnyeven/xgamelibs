@@ -4,6 +4,8 @@ package com.xgame.core.scene
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.Camera;
+	import com.xgame.core.map.Map;
+	import com.xgame.events.map.MapEvent;
 	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
@@ -19,7 +21,7 @@ package com.xgame.core.scene
 	{
 		protected var _objectList: Array;
 		protected var _renderList: Array;
-		//protected var _map: WorldMap;
+		protected var _map: Map;
 		protected var _mapGround: Shape;
 		protected var _stage: Stage;
 		protected var _initialized: Boolean = false;
@@ -52,6 +54,27 @@ package com.xgame.core.scene
 		public function initializeBuffer(): void
 		{
 			_mapGround = new Shape();
+		}
+		
+		public function initializeMap(mapId: uint): void
+		{
+			_map = Map.initilization(mapId);
+			_map.addEventListener(MapEvent.MAP_DATA_COMPLETE, onMapDataComplete);
+			_map.loadMapData();
+		}
+		
+		private function onMapDataComplete(evt: MapEvent): void
+		{
+			_map.initializeBuffer();
+			_map.mapDrawArea = _mapGround;
+			_map.addEventListener(MapEvent.COMPLETE, onMapComplete);
+			_map.prepareMap();
+		}
+		
+		private function onMapComplete(evt: MapEvent): void
+		{
+			_initialized = true;
+			_container.addChild(_mapGround);
 		}
 		
 		public function addObject(value: BitmapDisplay): void
@@ -150,7 +173,7 @@ package com.xgame.core.scene
 		protected function step(): void
 		{
 			var _child: BitmapDisplay;
-//			_map.update();
+			_map.update();
 			
 			if(_objectList.length == 0)
 			{

@@ -57,7 +57,7 @@ package com.xgame.configuration
 		/**
 		 * 地图资源目录
 		 */
-		public static const MAP_RES_PATH: String = 'assets/maps/';
+		public static const MAP_RES_PATH: String = 'assets/map/';
 		/**
 		 * 角色资源目录
 		 */

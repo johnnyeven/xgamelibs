@@ -166,10 +166,6 @@ package com.xgame.common.display
 			_positionY = value;
 			_zIndex = value;
 			
-			CONFIG::DebugMode
-			{
-				MonsterDebugger.trace(this, Camera.instance.cameraView);
-			}
 			if(!Camera.NSCamera::needCut && 
 				Camera.instance.cameraView != null && 
 				Camera.instance.cameraView.contains(_positionX, _positionY))

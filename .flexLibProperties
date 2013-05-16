@@ -31,6 +31,8 @@
     <classEntry path="com.xgame.core.map.Map"/>
     <classEntry path="com.xgame.enum.Action"/>
     <classEntry path="com.greensock.loading.utils.LoaderUtils"/>
+    <classEntry path="com.xgame.events.map.MapEvent"/>
+    <classEntry path="com.xgame.events.scene.SceneEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
