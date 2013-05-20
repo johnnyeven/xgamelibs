@@ -407,6 +407,7 @@ package com.xgame.core.map
 			}
 			_loader.unload();
 			_loader.dispose();
+			_loader = null;
 			if(_loaderList.length > 0)
 			{
 				startLoad();
