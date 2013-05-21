@@ -105,20 +105,20 @@ package com.xgame.core.map
 			}
 			else
 			{
+				MapContextConfig.MapSize.x = _xml.width;
+				MapContextConfig.MapSize.y = _xml.height;
+				
 				MapContextConfig.TileNum.x = _xml.tileNumWidth;
 				MapContextConfig.TileNum.y = _xml.tileNumHeight;
 				
-				MapContextConfig.TileSize.x = _xml.tileWidth;
-				MapContextConfig.TileSize.y = _xml.tileHeight;
+				MapContextConfig.TileSize.x = Math.floor(MapContextConfig.MapSize.x / MapContextConfig.TileNum.x);
+				MapContextConfig.TileSize.y = Math.floor(MapContextConfig.MapSize.y / MapContextConfig.TileNum.y);
 				
-				MapContextConfig.MapSize.x = MapContextConfig.TileNum.x * MapContextConfig.TileSize.x;
-				MapContextConfig.MapSize.y = MapContextConfig.TileNum.y * MapContextConfig.TileSize.y;
+				MapContextConfig.BlockNum.x = _xml.blockNumWidth;
+				MapContextConfig.BlockNum.y = _xml.blockNumHeight;
 				
-				MapContextConfig.BlockSize.x = _xml.blockWidth;
-				MapContextConfig.BlockSize.y = _xml.blockHeight;
-				
-				MapContextConfig.BlockNum.x = Math.ceil(MapContextConfig.MapSize.x / MapContextConfig.BlockSize.x);
-				MapContextConfig.BlockNum.y = Math.ceil(MapContextConfig.MapSize.y / MapContextConfig.BlockSize.y);
+				MapContextConfig.BlockSize.x = Math.floor(MapContextConfig.MapSize.x / MapContextConfig.BlockNum.x);
+				MapContextConfig.BlockSize.y = Math.floor(MapContextConfig.MapSize.y / MapContextConfig.BlockNum.y);
 				
 				_availableTileX = Math.ceil(GlobalContextConfig.Width / MapContextConfig.TileSize.x) + 2;
 				_availableTileY = Math.ceil(GlobalContextConfig.Height / MapContextConfig.TileSize.y) + 2;
@@ -222,7 +222,6 @@ package com.xgame.core.map
 			_smallScale = _smallMap.width / MapContextConfig.MapSize.x;
 			_smallMapBuffer = new BitmapData(_mapBuffer.width * _smallScale, _mapBuffer.height * _smallScale, false, 0);
 			
-//			prepareBlock();
 			update(true);
 		}
 		
@@ -312,10 +311,6 @@ package com.xgame.core.map
 				}
 				_tileToLoad.push(tempPos);
 			}
-//			CONFIG::DebugMode
-//			{
-//				MonsterDebugger.trace(this, {a: startX, b: startY});
-//			}
 			loadTiles();
 		}
 		
@@ -372,7 +367,6 @@ package com.xgame.core.map
 						_loader.autoDispose = true;
 						_loader.vars = options;
 						_loaderList.push(_loader);
-						//ResourceCenter.instance.load(SocketContextConfig.resource_server_ip + GlobalContextConfig.MAP_RES_PATH + _mapId + '/' + _tileToLoad[i][j] + '.jpg', options, onTileLoadComplete);
 					}
 				}
 			}
