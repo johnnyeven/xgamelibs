@@ -1,5 +1,6 @@
 package com.xgame.common.display
 {
+	import com.xgame.common.behavior.Behavior;
 	import com.xgame.configuration.GlobalContextConfig;
 	
 	import flash.geom.Rectangle;
@@ -14,9 +15,9 @@ package com.xgame.common.display
 		protected var _lastFrameTime: uint;
 		protected var _playTime: uint;
 		
-		public function BitmapMovieDispaly()
+		public function BitmapMovieDispaly(behavior: Behavior = null)
 		{
-			super();
+			super(behavior);
 			_currentFrame = 0;
 			_prevFrame = 0;
 			_totalFrame = 0;
@@ -60,10 +61,9 @@ package com.xgame.common.display
 			return true;
 		}
 		
-		override public function update():void
+		override protected function updateActionPre():void
 		{
 			step();
-			super.update();
 		}
 
 		public function get currentFrame():uint

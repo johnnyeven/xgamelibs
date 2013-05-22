@@ -2,6 +2,7 @@ package com.xgame.common.display
 {
 	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.TweenLite;
+	import com.xgame.common.behavior.Behavior;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.core.Camera;
 	import com.xgame.ns.NSCamera;
@@ -17,10 +18,10 @@ package com.xgame.common.display
 		public var canBeAttack: Boolean = false;
 		public var beFocus: Boolean = false;
 		protected var _graphic: ResourceData;
+		protected var _behavior: Behavior;
 		protected var _render: Render;
 		protected var _buffer: Bitmap;
-		protected var _rect: Rectangle
-		protected var _action: int;
+		protected var _rect: Rectangle;
 		protected var _positionX: int;
 		protected var _positionY: int;
 		protected var _zIndex: uint = 0;
@@ -31,7 +32,7 @@ package com.xgame.common.display
 		private static const BOTTOM_LEFT: uint = 2;
 		NSCamera var inScene: Boolean = false;
 		
-		public function BitmapDisplay()
+		public function BitmapDisplay(behavior: Behavior = null)
 		{
 			super();
 			_renderPos = TOP_LEFT;
@@ -43,19 +44,48 @@ package com.xgame.common.display
 			addChild(_buffer);
 			mouseChildren = false;
 			mouseEnabled = false;
+			
+			this.behavior = behavior;
+		}
+		
+		public function set behavior(value: Behavior): void
+		{
+			if(value != null)
+			{
+				if(_behavior != null)
+				{
+					_behavior.dispose();
+				}
+				_behavior = value;
+				_behavior.target = this;
+				_behavior.installListener();
+			}
 		}
 		
 		public function updateController(): void
 		{
-			
+			if(_behavior != null)
+			{
+				_behavior.step();
+			}
 		}
 		
 		public function update(): void
 		{
+			updateActionPre();
 			if(_buffer != null && _render != null && this.NSCamera::inScene)
 			{
 				_render.render(this);
 			}
+			updateActionAfter();
+		}
+		
+		protected function updateActionPre(): void
+		{
+		}
+		
+		protected function updateActionAfter(): void
+		{
 		}
 		
 		public function setBufferPos(x: Number = NaN, y: Number = NaN): void
@@ -210,14 +240,10 @@ package com.xgame.common.display
 			_render.target = this;
 		}
 
-		public function get action():int
+		public function get behavior():Behavior
 		{
-			return _action;
+			return _behavior;
 		}
 
-		public function set action(value:int):void
-		{
-			_action = value;
-		}
 	}
 }

@@ -33,6 +33,8 @@
     <classEntry path="com.greensock.loading.utils.LoaderUtils"/>
     <classEntry path="com.xgame.events.map.MapEvent"/>
     <classEntry path="com.xgame.events.scene.SceneEvent"/>
+    <classEntry path="com.xgame.common.display.ActionDisplay"/>
+    <classEntry path="com.xgame.common.behavior.Behavior"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
