@@ -1,5 +1,6 @@
 package com.xgame.core.center
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
@@ -68,8 +69,10 @@ package com.xgame.core.center
 				}
 				else
 				{
-					//TODO 换成Debug
-					trace('url error');
+					CONFIG::DebugMode
+					{
+						MonsterDebugger.trace(this, "URL invalid");
+					}
 					return;
 				}
 			}
@@ -94,7 +97,7 @@ package com.xgame.core.center
 			var _item: LoaderCore = evt.target as LoaderCore;
 			var _name: String = _item.name;
 			riseTrigger(_name + "_progress", evt);
-			//TODO
+			//TODO onProgress
 		}
 		
 		private function onLoadIOError(evt: LoaderEvent): void

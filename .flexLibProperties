@@ -35,6 +35,8 @@
     <classEntry path="com.xgame.events.scene.SceneEvent"/>
     <classEntry path="com.xgame.common.display.ActionDisplay"/>
     <classEntry path="com.xgame.common.behavior.Behavior"/>
+    <classEntry path="com.xgame.enum.Direction"/>
+    <classEntry path="com.xgame.common.display.ActionData"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

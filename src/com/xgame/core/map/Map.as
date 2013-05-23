@@ -7,6 +7,7 @@ package com.xgame.core.map
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.loading.core.LoaderCore;
 	import com.greensock.loading.utils.LoaderUtils;
+	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.configuration.MapContextConfig;
@@ -259,9 +260,19 @@ package com.xgame.core.map
 		
 		public function update(force: Boolean = false): void
 		{
-			if(Camera.instance.focus != null && Camera.instance.focus.action == Action.STOP && !force)
+			if(Camera.instance.focus != null && !force)
 			{
-				return;
+				if(Camera.instance.focus is ActionDisplay)
+				{
+					if((Camera.instance.focus as ActionDisplay).action == Action.STOP)
+					{
+						return;
+					}
+				}
+				else
+				{
+					return;
+				}
 			}
 			_mapDrawArea.x = -(Camera.instance.x % MapContextConfig.TileSize.x);
 			_mapDrawArea.y = -(Camera.instance.y % MapContextConfig.TileSize.y);

@@ -1,5 +1,7 @@
 package com.xgame.utils
 {
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -33,7 +35,19 @@ package com.xgame.utils
 			{
 				domain = ApplicationDomain.currentDomain;
 			}
-			return domain.getDefinition(name) as Class;
+			try
+			{
+				var _class: Class = domain.getDefinition(name) as Class;
+				return _class;
+			}
+			catch(err: Error)
+			{
+				CONFIG::DebugMode
+				{
+					MonsterDebugger.trace("Reflection", name + "没有定义");
+				}
+			}
+			return null;
 		}
 		
 		public static function createBitmapData(name: String, domain: ApplicationDomain = null): BitmapData

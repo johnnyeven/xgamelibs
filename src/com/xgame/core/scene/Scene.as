@@ -1,5 +1,6 @@
 package com.xgame.core.scene
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.configuration.GlobalContextConfig;
@@ -84,6 +85,7 @@ package com.xgame.core.scene
 				return;
 			}
 			_objectList.push(value);
+			MonsterDebugger.trace(this, Camera.instance.cameraView);
 			if(Camera.instance.cameraView.contains(value.positionX, value.positionY))
 			{
 				pushRenderList(value);
@@ -174,6 +176,7 @@ package com.xgame.core.scene
 		{
 			var _child: BitmapDisplay;
 			_map.update();
+			Camera.instance.update();
 			
 			if(_objectList.length == 0)
 			{
@@ -240,7 +243,6 @@ package com.xgame.core.scene
 					break;
 				}
 			}
-			Camera.instance.update();
 		}
 		
 		NSCamera function cut(): void

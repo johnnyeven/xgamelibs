@@ -103,7 +103,7 @@ package com.xgame.common.display
 		override public function get rect():Rectangle
 		{
 			_rect.x = _currentFrame * _graphic.frameWidth;
-			_rect.y = 0;
+			_rect.y = _direction * _graphic.frameHeight;
 			_rect.width = _graphic.frameWidth;
 			_rect.height = _graphic.frameHeight;
 			return _rect;
@@ -111,7 +111,7 @@ package com.xgame.common.display
 		
 		override public function get renderLine():uint
 		{
-			return 0;
+			return _direction;
 		}
 		
 		override public function get renderFrame():uint

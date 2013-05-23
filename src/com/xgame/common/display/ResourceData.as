@@ -2,8 +2,10 @@ package com.xgame.common.display
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	
 	public class ResourceData
 	{
@@ -11,16 +13,21 @@ package com.xgame.common.display
 		 * 原始位图
 		 */
 		protected var _bitmap: BitmapData;
+		protected var _bitmapDictionary: Dictionary;
+		protected var _actionDataDictionary: Dictionary;
 		protected var _frameArray: Vector.<Vector.<BitmapFrame>>;
 		protected var _frameLine: uint = 1;
 		protected var _frameTotal: uint = 1;
 		protected var _fps: Number = 0;
+		protected var _currentAction: int = -1;
 		private var _rect: Rectangle;
 		private var _frameWidth: uint = 0;
 		private var _frameHeight: uint = 0;
 		
 		public function ResourceData()
 		{
+			_bitmapDictionary = new Dictionary();
+			_actionDataDictionary = new Dictionary();
 		}
 		
 		/**
@@ -143,7 +150,7 @@ package com.xgame.common.display
 		/**
 		 * 获取资源
 		 */
-		public function getResource(data: BitmapData, frameLine: uint = 1, frameTotal: uint = 1, fps: Number = 0): void
+		public function getResource(data: BitmapData, action: int = 0, frameLine: uint = 1, frameTotal: uint = 1, fps: Number = 0): void
 		{
 			_frameLine = frameLine;
 			_frameTotal = frameTotal;
@@ -152,12 +159,10 @@ package com.xgame.common.display
 			_fps = fps;
 			_bitmap = data;
 			
-			_frameArray = prepareBitmapArray();
-//			if(_frameArray != null)
-//			{
-//				_bitmap.dispose();
-//				_bitmap = null;
-//			}
+			_bitmapDictionary[action] = prepareBitmapArray();
+			_actionDataDictionary[action] = new ActionData(action, frameTotal, frameLine, fps);
+			_bitmap.dispose();
+			_bitmap = null;
 		}
 		
 		/**
@@ -165,11 +170,11 @@ package com.xgame.common.display
 		 */
 		public function render(target: Bitmap, line: uint, frame: uint): void
 		{
-			if(_frameArray == null)
-			{
-				target.bitmapData = _bitmap;
-			}
-			else
+			if(_frameArray != null)
+//			{
+//				target.bitmapData = null;
+//			}
+//			else
 			{
 				target.bitmapData = _frameArray[line][frame].bitmapData;
 			}
@@ -180,18 +185,60 @@ package com.xgame.common.display
 		 */
 		public function dispose(): void
 		{
-			_bitmap = null;
-			for(var y: uint = 0; y < _frameLine; y++)
+			if(_bitmap != null)
 			{
-				for(var x: uint = 0; x < _frameTotal; x++)
-				{
-					_frameArray[y][x].dispose();
-				}
-				_frameArray[y].splice(0, _frameTotal);
+				_bitmap.dispose();
+				_bitmap = null;
 			}
-			_frameArray.splice(0, _frameLine);
-			_frameArray = null;
+			for(var i: String in _bitmapDictionary)
+			{
+				for(var y: uint = 0; y < _frameLine; y++)
+				{
+					for(var x: uint = 0; x < _frameTotal; x++)
+					{
+						_bitmapDictionary[i][y][x].dispose();
+					}
+					_bitmapDictionary[i][y].splice(0, _frameTotal);
+				}
+				_bitmapDictionary[i].splice(0, _frameLine);
+				delete _bitmapDictionary[i];
+				_bitmapDictionary[i] = null;
+			}
+			for(i in _actionDataDictionary)
+			{
+				delete _actionDataDictionary[i];
+				_actionDataDictionary[i] = null;
+			}
 			_rect = null;
 		}
+
+		public function get currentAction():int
+		{
+			return _currentAction;
+		}
+
+		public function set currentAction(value:int):void
+		{
+			if(_currentAction != value)
+			{
+				_currentAction = value;
+				if(_bitmapDictionary[value] != null)
+				{
+					_frameArray = _bitmapDictionary[value];
+					var actionData: ActionData = _actionDataDictionary[value];
+					if(actionData != null)
+					{
+						_frameLine = actionData.lineTotal;
+						_frameTotal = actionData.frameTotal;
+						_fps = actionData.fps;
+					}
+					else
+					{
+						throw new IllegalOperationError("该动作位图资源与配置数据不一致");
+					}
+				}
+			}
+		}
+
 	}
 }

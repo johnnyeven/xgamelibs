@@ -2,7 +2,7 @@ package com.xgame.enum
 {
 	public class Action
 	{
-		public static var RESURRECTION: int = -1;
+		public static var RESURRECTION: int = 8;
 		public static var STOP: int = 0;
 		public static var MOVE: int = 1;
 		public static var ATTACK: int = 2;

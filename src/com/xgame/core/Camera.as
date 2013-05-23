@@ -3,6 +3,7 @@ package com.xgame.core
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.configuration.MapContextConfig;
+	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.ns.NSCamera;
 	
@@ -113,7 +114,7 @@ package com.xgame.core
 			
 			update();
 			_scene.NSCamera::cut();
-			//TODO _map.update();
+			Map.instance.update();
 		}
 		
 		public function get focus(): BitmapDisplay

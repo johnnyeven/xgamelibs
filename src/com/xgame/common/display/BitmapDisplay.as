@@ -5,6 +5,7 @@ package com.xgame.common.display
 	import com.xgame.common.behavior.Behavior;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.core.Camera;
+	import com.xgame.enum.Direction;
 	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
@@ -17,6 +18,7 @@ package com.xgame.common.display
 		public var objectName: String;
 		public var canBeAttack: Boolean = false;
 		public var beFocus: Boolean = false;
+		protected var _direction: int;
 		protected var _graphic: ResourceData;
 		protected var _behavior: Behavior;
 		protected var _render: Render;
@@ -152,6 +154,7 @@ package com.xgame.common.display
 		public function set graphic(value:ResourceData):void
 		{
 			_graphic = value;
+			_graphic.currentAction = 0;
 			rebuild();
 		}
 
@@ -245,5 +248,47 @@ package com.xgame.common.display
 			return _behavior;
 		}
 
+		public function get direction():int
+		{
+			return _direction;
+		}
+
+		public function set direction(value:int):void
+		{
+			_direction = value;
+		}
+		
+		public function get angle(): uint
+		{
+			switch(_direction)
+			{
+				case Direction.DOWN:
+					return 180;
+					break;
+				case Direction.LEFT_DOWN:
+					return 215;
+					break;
+				case Direction.LEFT:
+					return 270;
+					break;
+				case Direction.LEFT_UP:
+					return 315;
+					break;
+				case Direction.UP:
+					return 0;
+					break;
+				case Direction.RIGHT_UP:
+					return 45;
+					break;
+				case Direction.RIGHT:
+					return 90;
+					break;
+				case Direction.RIGHT_DOWN:
+					return 135;
+					break;
+				default:
+					return 180;
+			}
+		}
 	}
 }

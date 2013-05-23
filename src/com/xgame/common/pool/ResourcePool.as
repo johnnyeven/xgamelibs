@@ -79,7 +79,10 @@ package com.xgame.common.pool
 			if(_cache == null)
 			{
 				_cache = Reflection.createBitmapData(name, domain);
-				add(name, _cache);
+				if(_cache != null)
+				{
+					add(name, _cache);
+				}
 			}
 			return _cache;
 		}
@@ -94,8 +97,15 @@ package com.xgame.common.pool
 			else
 			{
 				_resourceData = new ResourceData();
-				var _bitmapData: BitmapData = getBitmapData(name);
-				_resourceData.getResource(_bitmapData, _bitmapData["frameLine"], _bitmapData["frameTotal"], _bitmapData["fps"]);
+				var _bitmapData: BitmapData;
+				for(var i: int = 0; i < 9; i++)
+				{
+					_bitmapData = getBitmapData(name + "_" + i);
+					if(_bitmapData != null)
+					{
+						_resourceData.getResource(_bitmapData, i, _bitmapData["frameLine"], _bitmapData["frameTotal"], _bitmapData["fps"]);
+					}
+				}
 				_dataPool[name] = _resourceData;
 			}
 			return _resourceData;
