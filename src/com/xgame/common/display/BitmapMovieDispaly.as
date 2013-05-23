@@ -111,7 +111,7 @@ package com.xgame.common.display
 		
 		override public function get renderLine():uint
 		{
-			return _direction;
+			return Math.abs(_direction);
 		}
 		
 		override public function get renderFrame():uint

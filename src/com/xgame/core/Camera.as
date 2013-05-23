@@ -109,7 +109,10 @@ package com.xgame.core
 		
 		public function set focus(value: BitmapDisplay): void
 		{
-			_focus.beFocus = false;
+			if(_focus != null)
+			{
+				_focus.beFocus = false;
+			}
 			_focus = value;
 			
 			update();
