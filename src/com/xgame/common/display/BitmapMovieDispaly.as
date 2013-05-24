@@ -81,12 +81,12 @@ package com.xgame.common.display
 			return _prevFrame;
 		}
 
-		public function get isLoop():Boolean
+		public function get loop():Boolean
 		{
 			return _isLoop;
 		}
 
-		public function set isLoop(value:Boolean):void
+		public function set loop(value:Boolean):void
 		{
 			_isLoop = value;
 			if(value)
@@ -111,7 +111,7 @@ package com.xgame.common.display
 		
 		override public function get renderLine():uint
 		{
-			return Math.abs(_direction);
+			return _direction;
 		}
 		
 		override public function get renderFrame():uint

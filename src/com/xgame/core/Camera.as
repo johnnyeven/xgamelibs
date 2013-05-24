@@ -107,6 +107,8 @@ package com.xgame.core
 			return _cameraCutView;
 		}
 		
+		
+		
 		public function set focus(value: BitmapDisplay): void
 		{
 			if(_focus != null)
@@ -117,7 +119,7 @@ package com.xgame.core
 			
 			update();
 			_scene.NSCamera::cut();
-			Map.instance.update();
+			Map.instance.update(true);
 		}
 		
 		public function get focus(): BitmapDisplay

@@ -7,6 +7,7 @@ package com.xgame.core.scene
 	import com.xgame.core.Camera;
 	import com.xgame.core.map.Map;
 	import com.xgame.events.map.MapEvent;
+	import com.xgame.events.scene.SceneEvent;
 	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
@@ -16,9 +17,12 @@ package com.xgame.core.scene
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.errors.IllegalOperationError;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.utils.getTimer;
 
-	public class Scene
+	public class Scene implements IEventDispatcher
 	{
 		protected var _objectList: Array;
 		protected var _renderList: Array;
@@ -31,6 +35,7 @@ package com.xgame.core.scene
 		protected var _layerEffect: Sprite;
 		private var _lastZSortTime: uint;
 		private var _currentRenderIndex: uint = 0;
+		private var _eventDispatcher: EventDispatcher;
 		private static const ZSORT_DELAY: uint = 1000;
 		private static const RENDER_MAX_TIME: uint = 15;
 		
@@ -42,6 +47,7 @@ package com.xgame.core.scene
 			}
 			_stage = stage;
 			_container = container == null ? stage : container;
+			_eventDispatcher = new EventDispatcher(this);
 			
 			_objectList = new Array();
 			_renderList = new Array();
@@ -75,6 +81,7 @@ package com.xgame.core.scene
 		private function onMapComplete(evt: MapEvent): void
 		{
 			_initialized = true;
+			dispatchEvent(new SceneEvent(SceneEvent.SCENE_READY));
 			_container.addChild(_mapGround);
 		}
 		
@@ -175,8 +182,8 @@ package com.xgame.core.scene
 		protected function step(): void
 		{
 			var _child: BitmapDisplay;
-			_map.update();
 			Camera.instance.update();
+			_map.update();
 			
 			if(_objectList.length == 0)
 			{
@@ -277,6 +284,31 @@ package com.xgame.core.scene
 			
 			_mapGround.graphics.clear();
 			_mapGround = null;
+		}
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+		{
+			_eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+		{
+			_eventDispatcher.removeEventListener(type, listener, useCapture);
+		}
+		
+		public function dispatchEvent(event:Event):Boolean
+		{
+			return _eventDispatcher.dispatchEvent(event);
+		}
+		
+		public function hasEventListener(type:String):Boolean
+		{
+			return _eventDispatcher.hasEventListener(type);
+		}
+		
+		public function willTrigger(type:String):Boolean
+		{
+			return _eventDispatcher.willTrigger(type);
 		}
 	}
 }

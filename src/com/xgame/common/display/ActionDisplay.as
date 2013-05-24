@@ -24,6 +24,18 @@ package com.xgame.common.display
 			return true;
 		}
 		
+		protected function configLoop(): void
+		{
+			switch(_action)
+			{
+				case Action.DIE:
+					loop = false;
+					break;
+				default:
+					loop = true;
+			}
+		}
+		
 		public function get action():int
 		{
 			return _action;
@@ -46,7 +58,35 @@ package com.xgame.common.display
 			_currentFrame = 0;
 			_action = value;
 			_graphic.currentAction = value;
+			
+			configLoop();
 			rebuild();
+		}
+
+		public function get follow():ActionDisplay
+		{
+			return _follow;
+		}
+
+		public function set follow(value:ActionDisplay):void
+		{
+			_follow = value;
+			_followDistance = new Vector2D(40, 40);
+		}
+
+		public function get followDistance():Vector2D
+		{
+			return _followDistance;
+		}
+
+		public function set followDistance(value:Vector2D):void
+		{
+			_followDistance = value;
+		}
+		
+		public function get followed(): Boolean
+		{
+			return (_follow != null);
 		}
 	}
 }
