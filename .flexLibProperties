@@ -37,6 +37,7 @@
     <classEntry path="com.xgame.common.behavior.Behavior"/>
     <classEntry path="com.xgame.enum.Direction"/>
     <classEntry path="com.xgame.common.display.ActionData"/>
+    <classEntry path="com.xgame.common.behavior.MainPlayerBehavior"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
