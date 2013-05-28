@@ -18,6 +18,7 @@ package com.xgame.common.display
 		public var objectName: String;
 		public var canBeAttack: Boolean = false;
 		public var beFocus: Boolean = false;
+		protected var _speed: Number;
 		protected var _direction: int;
 		protected var _graphic: ResourceData;
 		protected var _behavior: Behavior;
@@ -258,6 +259,16 @@ package com.xgame.common.display
 			_direction = value;
 		}
 		
+		public function get speed():Number
+		{
+			return _speed;
+		}
+		
+		public function set speed(value:Number):void
+		{
+			_speed = value;
+		}
+		
 		public function get angle(): uint
 		{
 			switch(_direction)
@@ -290,5 +301,6 @@ package com.xgame.common.display
 					return 180;
 			}
 		}
+
 	}
 }

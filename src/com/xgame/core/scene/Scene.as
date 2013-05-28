@@ -1,8 +1,8 @@
 package com.xgame.core.scene
 {
 	import com.demonsters.debugger.MonsterDebugger;
+	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.Camera;
 	import com.xgame.core.map.Map;
@@ -30,7 +30,7 @@ package com.xgame.core.scene
 		protected var _mapGround: Shape;
 		protected var _stage: Stage;
 		protected var _initialized: Boolean = false;
-		protected var _player: BitmapMovieDispaly;
+		protected var _player: ActionDisplay;
 		protected var _container: DisplayObjectContainer;
 		protected var _layerEffect: Sprite;
 		private var _lastZSortTime: uint;
@@ -38,24 +38,49 @@ package com.xgame.core.scene
 		private var _eventDispatcher: EventDispatcher;
 		private static const ZSORT_DELAY: uint = 1000;
 		private static const RENDER_MAX_TIME: uint = 15;
+		private static var _instance: Scene;
+		private static var _allowInstance: Boolean = false;
 		
 		public function Scene(stage: Stage, container: DisplayObjectContainer = null)
 		{
-			if(stage == null)
+			if(_allowInstance)
 			{
-				throw new IllegalOperationError("stage参数必须指定舞台");
+				if(stage == null)
+				{
+					throw new IllegalOperationError("stage参数必须指定舞台");
+				}
+				_stage = stage;
+				_container = container == null ? stage : container;
+				_eventDispatcher = new EventDispatcher(this);
+				
+				_objectList = new Array();
+				_renderList = new Array();
+				
+				_layerEffect = new Sprite();
+				_container.addChild(_layerEffect);
+				
+				initializeBuffer();
 			}
-			_stage = stage;
-			_container = container == null ? stage : container;
-			_eventDispatcher = new EventDispatcher(this);
-			
-			_objectList = new Array();
-			_renderList = new Array();
-			
-			_layerEffect = new Sprite();
-			_container.addChild(_layerEffect);
-			
-			initializeBuffer();
+			else
+			{
+				throw new IllegalOperationError("不允许实例化这个类");
+			}
+		}
+		
+		public static function initialization(stage: Stage, container: DisplayObjectContainer = null): Scene
+		{
+			if(_instance == null)
+			{
+				_allowInstance = true;
+				_instance = new Scene(stage, container);
+				_allowInstance = false;
+			}
+			return _instance;
+		}
+		
+		public static function get instance(): Scene
+		{
+			return _instance;
 		}
 		
 		public function initializeBuffer(): void
@@ -141,7 +166,7 @@ package com.xgame.core.scene
 		
 		public function getDisplay(value: uint): BitmapDisplay
 		{
-			if(value > _objectList.length)
+			if(value >= _objectList.length)
 			{
 				return null;
 			}
@@ -151,6 +176,11 @@ package com.xgame.core.scene
 		public function get objectList(): Array
 		{
 			return _objectList;
+		}
+		
+		public function get renderList():Array
+		{
+			return _renderList;
 		}
 		
 		public function get stage(): Stage
@@ -166,6 +196,11 @@ package com.xgame.core.scene
 		public function get container(): DisplayObjectContainer
 		{
 			return _container;
+		}
+		
+		public function get player(): ActionDisplay
+		{
+			return _player;
 		}
 		
 		public function update(): void

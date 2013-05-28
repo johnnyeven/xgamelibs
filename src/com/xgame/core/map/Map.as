@@ -38,7 +38,6 @@ package com.xgame.core.map
 		private var _availableTileX: uint;
 		private var _availableTileY: uint;
 		private var _tileToLoad: Array;
-		private var _returnPoint: Point;
 		protected var _roadMap: BitmapData;
 		protected var _roadScale: Number;
 		protected var _alphaMap: BitmapData;
@@ -62,7 +61,6 @@ package com.xgame.core.map
 			}
 			_mapId = mapId;
 			_eventDispatcher = new EventDispatcher(this);
-			_returnPoint = new Point();
 			_loaderList = new Vector.<LoaderCore>();
 		}
 		
@@ -85,7 +83,6 @@ package com.xgame.core.map
 		public function dispose(): void
 		{
 			_instance = null;
-			_returnPoint = null;
 			_eventDispatcher = null;
 		}
 		
@@ -228,6 +225,7 @@ package com.xgame.core.map
 		
 		public function getWorldPosition(x: Number, y: Number): Point
 		{
+			var _returnPoint: Point = new Point();
 			_returnPoint.x = Camera.instance.x + x;
 			_returnPoint.y = Camera.instance.y + y;
 			
@@ -236,6 +234,7 @@ package com.xgame.core.map
 		
 		public function getScreenPosition(x: Number, y: Number): Point
 		{
+			var _returnPoint: Point = new Point();
 			_returnPoint.x = x - Camera.instance.x;
 			_returnPoint.y = y - Camera.instance.y;
 			
@@ -244,6 +243,7 @@ package com.xgame.core.map
 		
 		public function block2WorldPosition(x: Number, y: Number): Point
 		{
+			var _returnPoint: Point = new Point();
 			_returnPoint.x = (x + .5) * MapContextConfig.TileSize.x;
 			_returnPoint.y = (y + .5) * MapContextConfig.TileSize.y;
 			
@@ -252,6 +252,7 @@ package com.xgame.core.map
 		
 		public function worldPosition2Block(x: Number, y: Number): Point
 		{
+			var _returnPoint: Point = new Point();
 			_returnPoint.x = int(x / MapContextConfig.TileSize.x);
 			_returnPoint.y = int(y / MapContextConfig.TileSize.y);
 			
@@ -457,6 +458,16 @@ package com.xgame.core.map
 		public function get mapDrawArea():Shape
 		{
 			return _mapDrawArea;
+		}
+		
+		public function get astar():SilzAstar
+		{
+			return _astar;
+		}
+		
+		public function get negativePath():Array
+		{
+			return _negativePath;
 		}
 
 		public function set mapDrawArea(value:Shape):void

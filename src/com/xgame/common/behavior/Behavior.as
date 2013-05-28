@@ -13,6 +13,7 @@ package com.xgame.common.behavior
 	{
 		private var _halfSceneWidth: Number;
 		private var _halfSceneHeight: Number;
+		protected var _perception: Perception;
 		protected var _endPoint: Point;
 		protected var _nextPoint: Point;
 		protected var _target: BitmapDisplay;
