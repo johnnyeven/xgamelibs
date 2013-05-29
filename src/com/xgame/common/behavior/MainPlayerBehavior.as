@@ -9,6 +9,7 @@ package com.xgame.common.behavior
 	import com.xgame.enum.Action;
 	import com.xgame.utils.Angle;
 	
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 
@@ -67,10 +68,6 @@ package com.xgame.common.behavior
 		
 		protected function move(): Boolean
 		{
-			CONFIG::DebugMode
-			{
-				MonsterDebugger.trace(this, Map.instance.negativePath);
-			}
 			if(_path == null)
 			{
 				_path = new Array();
@@ -132,7 +129,7 @@ package com.xgame.common.behavior
 		{
 			super.calculatePosition();
 			
-			if((_target as ActionDisplay).action != Action.DIE)
+			if((_target as ActionDisplay).action == Action.DIE)
 			{
 				return;
 			}

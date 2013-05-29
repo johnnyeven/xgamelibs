@@ -20,6 +20,7 @@ package com.xgame.core.map
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -244,13 +245,22 @@ package com.xgame.core.map
 		public function block2WorldPosition(x: Number, y: Number): Point
 		{
 			var _returnPoint: Point = new Point();
-			_returnPoint.x = (x + .5) * MapContextConfig.TileSize.x;
-			_returnPoint.y = (y + .5) * MapContextConfig.TileSize.y;
+			_returnPoint.x = (x + .5) * MapContextConfig.BlockSize.x;
+			_returnPoint.y = (y + .5) * MapContextConfig.BlockSize.y;
 			
 			return _returnPoint;
 		}
 		
 		public function worldPosition2Block(x: Number, y: Number): Point
+		{
+			var _returnPoint: Point = new Point();
+			_returnPoint.x = int(x / MapContextConfig.BlockSize.x);
+			_returnPoint.y = int(y / MapContextConfig.BlockSize.y);
+			
+			return _returnPoint;
+		}
+		
+		public function worldPosition2Tile(x: Number, y: Number): Point
 		{
 			var _returnPoint: Point = new Point();
 			_returnPoint.x = int(x / MapContextConfig.TileSize.x);
@@ -278,7 +288,7 @@ package com.xgame.core.map
 			_mapDrawArea.x = -(Camera.instance.x % MapContextConfig.TileSize.x);
 			_mapDrawArea.y = -(Camera.instance.y % MapContextConfig.TileSize.y);
 			
-			var _startPoint : Point = worldPosition2Block(Camera.instance.x, Camera.instance.y);
+			var _startPoint : Point = worldPosition2Tile(Camera.instance.x, Camera.instance.y);
 			var _startX: int = _startPoint.x;
 			var _startY: int = _startPoint.y;
 			if(_currentStartX == _startX && _currentStartY == _startPoint.y && !force)
