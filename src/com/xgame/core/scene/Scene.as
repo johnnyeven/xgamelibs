@@ -31,6 +31,7 @@ package com.xgame.core.scene
 		protected var _initialized: Boolean = false;
 		protected var _player: ActionDisplay;
 		protected var _container: DisplayObjectContainer;
+		protected var _layerDisplay: Sprite;
 		protected var _layerEffect: Sprite;
 		private var _lastZSortTime: uint;
 		private var _currentRenderIndex: uint = 0;
@@ -55,7 +56,9 @@ package com.xgame.core.scene
 				_objectList = new Array();
 				_renderList = new Array();
 				
+				_layerDisplay = new Sprite();
 				_layerEffect = new Sprite();
+				_container.addChild(_layerDisplay);
 				_container.addChild(_layerEffect);
 				
 				initializeBuffer();
@@ -107,6 +110,7 @@ package com.xgame.core.scene
 			_initialized = true;
 			dispatchEvent(new SceneEvent(SceneEvent.SCENE_READY));
 			_container.addChild(_mapGround);
+			_container.setChildIndex(_mapGround, 0);
 		}
 		
 		public function addObject(value: BitmapDisplay): void
@@ -141,7 +145,7 @@ package com.xgame.core.scene
 				return;
 			}
 			_renderList.push(value);
-			_container.addChild(value);
+			_layerDisplay.addChild(value);
 			value.NSCamera::inScene = true;
 			value.NSCamera::shadeIn();
 		}
@@ -154,9 +158,9 @@ package com.xgame.core.scene
 				_renderList.splice(index, 1);
 			}
 			
-			if(_container.contains(value))
+			if(_layerDisplay.contains(value))
 			{
-				_container.removeChild(value);
+				_layerDisplay.removeChild(value);
 				value.NSCamera::inScene = false;
 				value.NSCamera::shadeOut();
 			}
@@ -241,19 +245,18 @@ package com.xgame.core.scene
 				
 				while(max--)
 				{
-					if(max < _container.numChildren)
+					if(max < _layerDisplay.numChildren)
 					{
-						child = _container.getChildAt(max);
+						child = _layerDisplay.getChildAt(max);
 						item = _renderList[max];
 						
-						if(child != item && _container.contains(item))
+						if(child != item && _layerDisplay.contains(item))
 						{
-							_container.setChildIndex(item, max);
+							_layerDisplay.setChildIndex(item, max);
 						}
 					}
 				}
 				
-				_container.setChildIndex(_mapGround, 0);
 				_lastZSortTime = GlobalContextConfig.Timer;
 			}
 			else if(Camera.NSCamera::needCut)
@@ -306,6 +309,10 @@ package com.xgame.core.scene
 		{
 			_objectList.splice(0, _objectList.length);
 			
+			while(_layerDisplay.numChildren > 0)
+			{
+				_layerDisplay.removeChildAt(0);
+			}
 			while(_layerEffect.numChildren > 0)
 			{
 				_layerEffect.removeChildAt(0);
