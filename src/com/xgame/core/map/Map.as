@@ -1,6 +1,5 @@
 package com.xgame.core.map
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.ImageLoader;
 	import com.greensock.loading.LoaderMax;
@@ -361,10 +360,6 @@ package com.xgame.core.map
 				return;
 			}
 			_mapDrawArea.cacheAsBitmap = false;
-			CONFIG::DebugMode
-			{
-				MonsterDebugger.trace(this, _tileToLoad);
-			}
 			var _bm: BitmapData;
 			var _temp: Array;
 			for(var i: int = 0; i < _tileToLoad.length; i++)

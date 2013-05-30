@@ -1,6 +1,5 @@
 package com.xgame.core.center
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.LoaderMax;
 	import com.greensock.loading.SWFLoader;
@@ -69,10 +68,6 @@ package com.xgame.core.center
 				}
 				else
 				{
-					CONFIG::DebugMode
-					{
-						MonsterDebugger.trace(this, "URL invalid");
-					}
 					return;
 				}
 			}

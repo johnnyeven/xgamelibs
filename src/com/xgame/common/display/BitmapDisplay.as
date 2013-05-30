@@ -1,6 +1,5 @@
 package com.xgame.common.display
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.greensock.TweenLite;
 	import com.xgame.common.behavior.Behavior;
 	import com.xgame.common.display.renders.Render;

@@ -1,6 +1,5 @@
 package com.xgame.common.behavior
 {
-	import com.demonsters.debugger.MonsterDebugger;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.IAttackable;
