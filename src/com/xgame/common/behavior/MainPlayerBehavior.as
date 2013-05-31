@@ -2,7 +2,7 @@ package com.xgame.common.behavior
 {
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.IAttackable;
+	import com.xgame.common.display.IBattle;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.enum.Action;

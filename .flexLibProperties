@@ -38,8 +38,9 @@
     <classEntry path="com.xgame.enum.Direction"/>
     <classEntry path="com.xgame.common.display.ActionData"/>
     <classEntry path="com.xgame.common.behavior.MainPlayerBehavior"/>
-    <classEntry path="com.xgame.common.display.IAttackable"/>
+    <classEntry path="com.xgame.common.display.IBattle"/>
     <classEntry path="com.xgame.utils.Angle"/>
+    <classEntry path="com.xgame.common.display.CharacterDisplay"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
