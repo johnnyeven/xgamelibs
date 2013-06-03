@@ -8,7 +8,7 @@ package com.xgame.common.display
 	{
 		protected var _action: int;
 		private var _follow: ActionDisplay;
-		private var _followDistance: Vector2D;
+		private var _followDistance: Number;
 		
 		public function ActionDisplay(behavior: Behavior = null)
 		{
@@ -71,15 +71,15 @@ package com.xgame.common.display
 		public function set follow(value:ActionDisplay):void
 		{
 			_follow = value;
-			_followDistance = new Vector2D(40, 40);
+			_followDistance = 40;
 		}
 
-		public function get followDistance():Vector2D
+		public function get followDistance():Number
 		{
 			return _followDistance;
 		}
 
-		public function set followDistance(value:Vector2D):void
+		public function set followDistance(value:Number):void
 		{
 			_followDistance = value;
 		}

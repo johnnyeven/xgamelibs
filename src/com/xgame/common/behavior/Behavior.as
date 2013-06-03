@@ -7,9 +7,12 @@ package com.xgame.common.behavior
 	import com.xgame.core.map.Map;
 	import com.xgame.enum.Direction;
 	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 
-	public class Behavior
+	public class Behavior implements IEventDispatcher
 	{
 		private var _halfSceneWidth: Number;
 		private var _halfSceneHeight: Number;
@@ -18,11 +21,13 @@ package com.xgame.common.behavior
 		protected var _nextPoint: Point;
 		protected var _target: BitmapDisplay;
 		protected var _listenerInstalled: Boolean = false;
+		protected var _eventDispatcher: EventDispatcher;
 		
 		public function Behavior()
 		{
 			_halfSceneWidth = GlobalContextConfig.Width / 2;
 			_halfSceneHeight = GlobalContextConfig.Height / 2;
+			_eventDispatcher = new EventDispatcher(this);
 		}
 		
 		public function step(): void
@@ -138,6 +143,29 @@ package com.xgame.common.behavior
 			return _listenerInstalled;
 		}
 
-
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false): void
+		{
+			_eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		public function dispatchEvent(e:Event): Boolean
+		{
+			return _eventDispatcher.dispatchEvent(e);
+		}
+		
+		public function hasEventListener(type:String): Boolean
+		{
+			return _eventDispatcher.hasEventListener(type);
+		}
+		
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false): void
+		{
+			_eventDispatcher.removeEventListener(type, listener, useCapture);
+		}
+		
+		public function willTrigger(type:String): Boolean
+		{
+			return _eventDispatcher.willTrigger(type);
+		}
 	}
 }

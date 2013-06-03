@@ -1,11 +1,14 @@
 package com.xgame.common.behavior
 {
+	import com.xgame.common.Vector2D;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
+	import com.xgame.common.display.CharacterDisplay;
 	import com.xgame.common.display.IBattle;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.enum.Action;
+	import com.xgame.events.BehaviorEvent;
 	import com.xgame.utils.Angle;
 	
 	import flash.display.Sprite;
@@ -113,6 +116,102 @@ package com.xgame.common.behavior
 			return true;
 		}
 		
+		public function moveKeepDistance(x: Number, y: Number, distance: Number = -1): void
+		{
+			var _this: CharacterDisplay = _target as CharacterDisplay;
+			if(_this.attacker != null)
+			{
+				if(Perception.getDistanceByPoint(_this, _this.attackerPosition) <= distance)
+				{
+					return;
+				}
+			}
+			else
+			{
+				return;
+			}
+			if(distance <= 0)
+			{
+				_endPoint = new Point(x, y);
+				move();
+				return;
+			}
+			
+			if(_path == null)
+			{
+				_path = new Array();
+			}
+			else
+			{
+				_path.splice(0, _path.length);
+			}
+			
+			var _point1: Point;
+			var _point2: Point;
+			if(Map.instance.astar == null)
+			{
+				_point1 = Map.instance.worldPosition2Block(_target.positionX, _target.positionY);
+				_path.push([_point1.x, _point1.y]);
+				_point2 = Map.instance.worldPosition2Block(_endPoint.x, _endPoint.y);
+				_path.push([_point2.x, _point2.y]);
+			}
+			else
+			{
+				_point1 = Map.instance.worldPosition2Block(_endPoint.x, _endPoint.y);
+				if(Map.instance.negativePath[_point1.y][_point1.x])
+				{
+					(_target as ActionDisplay).action = Action.STOP;
+					return;
+				}
+				
+				var node: Array = Map.instance.astar.find(_target.positionX, _target.positionY, _endPoint.x, _endPoint.y);
+				if(node == null)
+				{
+					(_target as ActionDisplay).action = Action.STOP;
+					return;
+				}
+				else
+				{
+					var index: int = getNearestPathIndex(node, x, y, distance);
+					var newNode: Point;
+					if (index != -1)
+					{
+						var vector: Vector2D;
+						var temp: Point = Map.instance.block2WorldPosition(node[index].x, node[index].y);
+						var temp2: Point = Map.instance.block2WorldPosition(node[index + 1].x, node[index + 1].y);
+						if (index >= node.length -1)
+						{
+							vector = new Vector2D(temp.x - _this.attackerPosition.x, temp.y - _this.attackerPosition.y);
+						}
+						else
+						{
+							vector = new Vector2D(temp.x - temp2.x, temp.y - temp2.y);
+						}
+						vector.length = distance - 5;
+						
+						newNode = Map.instance.worldPosition2Block(temp2.x + vector.x, temp2.y + vector.y);
+					}
+					else
+					{
+						moveKeepDistance(_this.attackerPosition.x, _this.attackerPosition.y, distance);
+						return;
+					}
+					
+					_path = new Array();
+					for (var i: uint = 0; i <= index; i++)
+					{
+						_path.push([node[i].x, node[i].y]);
+						if (i == index)
+						{
+							_path.push([newNode.x, newNode.y]);
+						}
+					}
+					_endPoint = Map.instance.block2WorldPosition(_path[_path.length - 1][0], _path[_path.length - 1][1]);
+				}
+			}
+			_currentStep = 1;
+		}
+		
 		protected function moveTo(x: Number, y: Number): void
 		{
 			if((_target as ActionDisplay).action != Action.DIE)
@@ -169,6 +268,7 @@ package com.xgame.common.behavior
 					if(_currentStep >= _path.length)
 					{
 						stopMovement();
+						_eventDispatcher.dispatchEvent(new BehaviorEvent(BehaviorEvent.MOVE_IN_POSITION));
 					}
 				}
 				else
@@ -180,8 +280,33 @@ package com.xgame.common.behavior
 		
 		protected function stopMovement(action: int = -1): void
 		{
-			(_target as ActionDisplay).action = action == -1 ? Action.STOP : action;
 			clearPath();
+			(_target as ActionDisplay).action = action == -1 ? Action.STOP : action;
+		}
+		
+		private function getNearestPathIndex(node: Array, x: Number, y: Number, distance: Number): int
+		{
+			var _this: CharacterDisplay = _target as CharacterDisplay;
+			var _point: Point;
+			for(var i: int = node.length - 1; i >= 0; i--)
+			{
+				_point = Map.instance.block2WorldPosition(node[i].x, node[i].y);
+				if(_this.attacker != null)
+				{
+					if(Point.distance(_point, _this.attackerPosition) > distance)
+					{
+						return i;
+					}
+				}
+				else
+				{
+					if(Point.distance(_point, new Point(x, y)) > distance)
+					{
+						return i;
+					}
+				}
+			}
+			return -1;
 		}
 	}
 }

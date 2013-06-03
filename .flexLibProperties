@@ -41,6 +41,7 @@
     <classEntry path="com.xgame.common.display.IBattle"/>
     <classEntry path="com.xgame.utils.Angle"/>
     <classEntry path="com.xgame.common.display.CharacterDisplay"/>
+    <classEntry path="com.xgame.events.BehaviorEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

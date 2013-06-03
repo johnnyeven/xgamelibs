@@ -1,7 +1,11 @@
 package com.xgame.common.display
 {
 	import com.xgame.common.behavior.Behavior;
+	import com.xgame.common.behavior.MainPlayerBehavior;
+	import com.xgame.common.behavior.Perception;
+	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.enum.Action;
+	import com.xgame.events.BehaviorEvent;
 	
 	import flash.geom.Point;
 	
@@ -146,14 +150,110 @@ package com.xgame.common.display
 		
 		public function prepareAttack(o:*):void
 		{
+			if(o is BitmapDisplay)
+			{
+				if((o as BitmapDisplay).canBeAttack)
+				{
+					_attacker = o;
+				}
+				else
+				{
+					return;
+				}
+			}
+			else if(o is Point)
+			{
+				_attacker = o;
+			}
+			followDistance = _attackRange;
+			if(Perception.getDistanceByPoint(this, attackerPosition) <= _attackRange)
+			{
+				attack();
+			}
+			else
+			{
+				_behavior.addEventListener(BehaviorEvent.MOVE_IN_POSITION, onMoveInPosition);
+				(_behavior as MainPlayerBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
+			}
+		}
+		
+		protected function onMoveInPosition(evt: BehaviorEvent): void
+		{
+			if (_attacker != null)
+			{
+				if(Perception.getDistanceByPoint(this, attackerPosition) <= _attackRange)
+				{
+					_behavior.removeEventListener(BehaviorEvent.MOVE_IN_POSITION, onMoveInPosition);
+					attack();
+				}
+				else
+				{
+					(_behavior as MainPlayerBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
+				}
+			}
 		}
 		
 		public function attack():void
 		{
+			if(_attacker is BitmapDisplay)
+			{
+				if(!(_attacker as BitmapDisplay).canBeAttack)
+				{
+					return;
+				}
+			}
+			action = Action.ATTACK;
+			
+			var speed: Number = 1000 / _attackSpeed;
+			_playTime = _playTime > speed ? speed : _playTime;
+			_lastAttackTime = GlobalContextConfig.Timer;
 		}
 		
 		public function underAttack(damage:Number):void
 		{
+			if (damage >= _health)
+			{
+				_health = 0;
+				action = Action.DIE;
+			}
+			else
+			{
+				_health -= damage;
+			}
+		}
+		
+		override protected function step():Boolean
+		{
+			if(_graphic == null || _graphic.fps == 0)
+			{
+				return false;
+			}
+			if(GlobalContextConfig.Timer - _lastFrameTime > _playTime && !_isEnd)
+			{
+				_lastFrameTime = GlobalContextConfig.Timer;
+				_prevFrame = _currentFrame;
+				
+				if(_currentFrame >= _totalFrame - 1)
+				{
+					if(_action == Action.ATTACK)
+					{
+						if (GlobalContextConfig.Timer - _lastAttackTime > attackCoolDown)
+						{
+							_isLoop ? _currentFrame = 0 : _isEnd = true;
+							_lastAttackTime = GlobalContextConfig.Timer;
+						}
+					}
+					else
+					{
+						_isLoop ? _currentFrame = 0 : _isEnd = true;
+					}
+				}
+				else
+				{
+					_currentFrame++;
+				}
+			}
+			return true;
 		}
 	}
 }
