@@ -4,6 +4,7 @@ package com.xgame.common.display
 	import com.xgame.common.behavior.MainPlayerBehavior;
 	import com.xgame.common.behavior.Perception;
 	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.core.map.Map;
 	import com.xgame.enum.Action;
 	import com.xgame.events.BehaviorEvent;
 	
@@ -20,8 +21,10 @@ package com.xgame.common.display
 		protected var _energyMax: Number;
 		protected var _attackSpeed: Number;
 		protected var _attackRange: Number;
-		
 		protected var _lastAttackTime: int;
+		
+		protected var _characterName: String;
+		protected var _characterLevel: uint;
 		
 		public function CharacterDisplay(behavior:Behavior=null)
 		{
@@ -253,7 +256,30 @@ package com.xgame.common.display
 					_currentFrame++;
 				}
 			}
+			_buffer.alpha = Map.instance.inAlphaArea(positionX, positionY) ? .5 : 1;
 			return true;
 		}
+
+		public function get characterName():String
+		{
+			return _characterName;
+		}
+
+		public function set characterName(value:String):void
+		{
+			_characterName = value;
+		}
+
+		public function get characterLevel():uint
+		{
+			return _characterLevel;
+		}
+
+		public function set characterLevel(value:uint):void
+		{
+			_characterLevel = value;
+		}
+
+
 	}
 }

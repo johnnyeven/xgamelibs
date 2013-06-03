@@ -430,6 +430,18 @@ package com.xgame.core.map
 			}
 		}
 		
+		public function inAlphaArea(x: uint, y: uint): Boolean
+		{
+			if(_alphaMap != null)
+			{
+				return _alphaMap.getPixel32(int(_alphaMap.width / MapContextConfig.MapSize.x * x), int(_alphaMap.height / MapContextConfig.MapSize.y * y)) != 0x00000000;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
 			_eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
