@@ -5,6 +5,7 @@ package com.xgame.common.behavior
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.CharacterDisplay;
 	import com.xgame.common.display.IBattle;
+	import com.xgame.common.display.MonsterDisplay;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.enum.Action;
@@ -15,12 +16,12 @@ package com.xgame.common.behavior
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 
-	public class MainPlayerBehavior extends Behavior
+	public class MonsterBehavior extends Behavior
 	{
 		protected var _currentStep: uint;
 		protected var _path: Array;
 		
-		public function MainPlayerBehavior()
+		public function MonsterBehavior()
 		{
 			super();
 			
@@ -30,12 +31,12 @@ package com.xgame.common.behavior
 		
 		override public function installListener():void
 		{
-			Scene.instance.stage.addEventListener(MouseEvent.CLICK, onMouseClick, false, 0, true);
+			
 		}
 		
 		override public function uninstallListener():void
 		{
-			Scene.instance.stage.removeEventListener(MouseEvent.CLICK, onMouseClick);
+			
 		}
 		
 		public function clearPath(): void
@@ -48,24 +49,6 @@ package com.xgame.common.behavior
 			_path.splice(0, _path.length);
 			_path = null;
 			_currentStep = 1;
-		}
-		
-		private function onMouseClick(evt: MouseEvent): void
-		{
-			if((_target as ActionDisplay).action == Action.DIE)
-			{
-				return;
-			}
-			
-			var clicker: BitmapDisplay = Perception.getClicker(evt.stageX, evt.stageY);
-			if(clicker != null)
-			{
-				//TODO 激活点击事件
-				return;
-			}
-			
-			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
-			move();
 		}
 		
 		protected function move(): Boolean
@@ -116,9 +99,21 @@ package com.xgame.common.behavior
 			return true;
 		}
 		
+		public function moveToPosition(x: Number, y: Number): void
+		{
+			if((_target as ActionDisplay).action == Action.DIE)
+			{
+				return;
+			}
+			
+			_endPoint.x = x;
+			_endPoint.y = y;
+			move();
+		}
+		
 		public function moveKeepDistance(x: Number, y: Number, distance: Number = -1): void
 		{
-			var _this: CharacterDisplay = _target as CharacterDisplay;
+			var _this: MonsterDisplay = _target as MonsterDisplay;
 			if(_this.attacker != null)
 			{
 				if(Perception.getDistanceByPoint(_this, _this.attackerPosition) <= distance)
@@ -287,7 +282,7 @@ package com.xgame.common.behavior
 		
 		private function getNearestPathIndex(node: Array, x: Number, y: Number, distance: Number): int
 		{
-			var _this: CharacterDisplay = _target as CharacterDisplay;
+			var _this: MonsterDisplay = _target as MonsterDisplay;
 			var _point: Point;
 			for(var i: int = node.length - 1; i >= 0; i--)
 			{

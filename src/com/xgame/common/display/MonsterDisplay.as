@@ -1,7 +1,7 @@
 package com.xgame.common.display
 {
 	import com.xgame.common.behavior.Behavior;
-	import com.xgame.common.behavior.MainPlayerBehavior;
+	import com.xgame.common.behavior.MonsterBehavior;
 	import com.xgame.common.behavior.Perception;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.map.Map;
@@ -10,7 +10,7 @@ package com.xgame.common.display
 	
 	import flash.geom.Point;
 	
-	public class CharacterDisplay extends ActionDisplay implements IBattle
+	public class MonsterDisplay extends ActionDisplay implements IBattle
 	{
 		protected var _attacker: *;
 		protected var _health: Number;
@@ -26,9 +26,9 @@ package com.xgame.common.display
 		protected var _characterName: String;
 		protected var _characterLevel: uint;
 		
-		public function CharacterDisplay()
+		public function MonsterDisplay()
 		{
-			super(new MainPlayerBehavior());
+			super(new MonsterBehavior());
 			canBeAttack = true;
 		}
 		
@@ -177,7 +177,7 @@ package com.xgame.common.display
 			else
 			{
 				_behavior.addEventListener(BehaviorEvent.MOVE_IN_POSITION, onMoveInPosition);
-				(_behavior as MainPlayerBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
+				(_behavior as MonsterBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
 			}
 		}
 		
@@ -192,7 +192,7 @@ package com.xgame.common.display
 				}
 				else
 				{
-					(_behavior as MainPlayerBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
+					(_behavior as MonsterBehavior).moveKeepDistance(attackerPosition.x, attackerPosition.y, followDistance);
 				}
 			}
 		}
@@ -239,27 +239,25 @@ package com.xgame.common.display
 			_buffer.alpha = Map.instance.inAlphaArea(positionX, positionY) ? .5 : 1;
 			return true;
 		}
-
+		
 		public function get characterName():String
 		{
 			return _characterName;
 		}
-
+		
 		public function set characterName(value:String):void
 		{
 			_characterName = value;
 		}
-
+		
 		public function get characterLevel():uint
 		{
 			return _characterLevel;
 		}
-
+		
 		public function set characterLevel(value:uint):void
 		{
 			_characterLevel = value;
 		}
-
-
 	}
 }

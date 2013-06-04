@@ -15,24 +15,16 @@ package com.xgame.common.display
 			super(behavior);
 		}
 		
-		override protected function step():Boolean
-		{
-			if(!super.step())
-			{
-				return false;
-			}
-			return true;
-		}
-		
 		protected function configLoop(): void
 		{
 			switch(_action)
 			{
-				case Action.DIE:
-					loop = false;
+				case Action.CAUTION:
+				case Action.MOVE:
+					loop = true;
 					break;
 				default:
-					loop = true;
+					loop = false;
 			}
 		}
 		

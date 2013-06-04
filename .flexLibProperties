@@ -42,6 +42,7 @@
     <classEntry path="com.xgame.utils.Angle"/>
     <classEntry path="com.xgame.common.display.CharacterDisplay"/>
     <classEntry path="com.xgame.events.BehaviorEvent"/>
+    <classEntry path="com.xgame.common.display.MonsterDisplay"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
