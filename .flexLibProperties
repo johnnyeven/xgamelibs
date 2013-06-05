@@ -43,6 +43,10 @@
     <classEntry path="com.xgame.common.display.CharacterDisplay"/>
     <classEntry path="com.xgame.events.BehaviorEvent"/>
     <classEntry path="com.xgame.common.display.MonsterDisplay"/>
+    <classEntry path="com.xgame.core.skill.SkillController"/>
+    <classEntry path="com.xgame.common.display.EffectDisplay"/>
+    <classEntry path="com.xgame.common.display.SingEffectDisplay"/>
+    <classEntry path="com.xgame.events.SkillEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
