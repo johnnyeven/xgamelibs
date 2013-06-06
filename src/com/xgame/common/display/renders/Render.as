@@ -4,7 +4,7 @@ package com.xgame.common.display.renders
 
 	public class Render
 	{
-		private var _target: BitmapDisplay;
+		protected var _target: BitmapDisplay;
 		
 		public function Render()
 		{

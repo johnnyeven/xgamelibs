@@ -5,6 +5,7 @@ package com.xgame.common.behavior
 	import com.xgame.configuration.MapContextConfig;
 	import com.xgame.core.Camera;
 	import com.xgame.core.map.Map;
+	import com.xgame.core.skill.SkillController;
 	import com.xgame.enum.Direction;
 	
 	import flash.events.Event;
@@ -16,6 +17,7 @@ package com.xgame.common.behavior
 	{
 		private var _halfSceneWidth: Number;
 		private var _halfSceneHeight: Number;
+		protected var _skill: SkillController;
 		protected var _perception: Perception;
 		protected var _endPoint: Point;
 		protected var _nextPoint: Point;
@@ -29,7 +31,12 @@ package com.xgame.common.behavior
 			_halfSceneHeight = GlobalContextConfig.Height / 2;
 			_eventDispatcher = new EventDispatcher(this);
 		}
-		
+
+		public function get skill():SkillController
+		{
+			return _skill;
+		}
+
 		public function step(): void
 		{
 			calculatePosition();

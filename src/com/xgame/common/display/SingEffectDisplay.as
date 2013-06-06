@@ -21,6 +21,16 @@ package com.xgame.common.display
 			_positionY = 0;
 		}
 		
+		public function get owner():BitmapDisplay
+		{
+			return _owner;
+		}
+
+		public function set owner(value:BitmapDisplay):void
+		{
+			_owner = value;
+		}
+
 		public function get singTime():int
 		{
 			return _singTime;
@@ -54,7 +64,8 @@ package com.xgame.common.display
 				evt.skillId = _skillId;
 				evt.skillTarget = _target;
 				dispatchEvent(evt);
-				Scene.instance.removeObject(this);
+				_owner.removeDisplay(this);
+//				Scene.instance.removeObject(this);
 			}
 			return true;
 		}

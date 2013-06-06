@@ -7,11 +7,13 @@ package com.xgame.common.behavior
 	import com.xgame.common.display.IBattle;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
+	import com.xgame.core.skill.SkillController;
 	import com.xgame.enum.Action;
 	import com.xgame.events.BehaviorEvent;
 	import com.xgame.utils.Angle;
 	
 	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 
@@ -31,11 +33,13 @@ package com.xgame.common.behavior
 		override public function installListener():void
 		{
 			Scene.instance.stage.addEventListener(MouseEvent.CLICK, onMouseClick, false, 0, true);
+			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
 		}
 		
 		override public function uninstallListener():void
 		{
 			Scene.instance.stage.removeEventListener(MouseEvent.CLICK, onMouseClick);
+			Scene.instance.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 		
 		public function clearPath(): void
@@ -48,6 +52,11 @@ package com.xgame.common.behavior
 			_path.splice(0, _path.length);
 			_path = null;
 			_currentStep = 1;
+		}
+		
+		private function onKeyDown(evt: KeyboardEvent): void
+		{
+			_skill.prepareSkill("16", this);
 		}
 		
 		private function onMouseClick(evt: MouseEvent): void
@@ -308,6 +317,13 @@ package com.xgame.common.behavior
 				}
 			}
 			return -1;
+		}
+		
+		override public function set target(value:BitmapDisplay):void
+		{
+			_target = value;
+			_skill = new SkillController();
+			_skill.target = value;
 		}
 	}
 }

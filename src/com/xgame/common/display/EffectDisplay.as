@@ -14,5 +14,16 @@ package com.xgame.common.display
 		{
 			return 0;
 		}
+		
+		override protected function updateActionAfter(): void
+		{
+			return;
+		}
+		
+		override public function set graphic(value:ResourceData):void
+		{
+			super.graphic = value;
+			_graphic.currentAction = 0;
+		}
 	}
 }

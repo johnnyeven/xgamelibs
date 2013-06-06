@@ -8,6 +8,7 @@ package com.xgame.common.display
 	import com.xgame.ns.NSCamera;
 	
 	import flash.display.Bitmap;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 
@@ -29,6 +30,9 @@ package com.xgame.common.display
 		protected var _zIndex: uint = 0;
 		protected var _zIndexOffset: uint = 0;
 		private var _renderPos: uint;
+		private var _childrenDisplay: Vector.<BitmapDisplay>;
+		private var _childrenContainer: Sprite;
+		private var _parentDisplay: BitmapDisplay;
 		private static const CENTER: uint = 0;
 		private static const TOP_LEFT: uint = 1;
 		private static const BOTTOM_LEFT: uint = 2;
@@ -37,6 +41,10 @@ package com.xgame.common.display
 		public function BitmapDisplay(behavior: Behavior = null)
 		{
 			super();
+			_childrenDisplay = new Vector.<BitmapDisplay>();
+			_childrenContainer = new Sprite;
+			addChild(_childrenContainer);
+			
 			_renderPos = TOP_LEFT;
 			_rect = new Rectangle();
 			_positionX = 0;
@@ -50,6 +58,21 @@ package com.xgame.common.display
 			this.behavior = behavior;
 		}
 		
+		public function get childrenDisplay():Vector.<BitmapDisplay>
+		{
+			return _childrenDisplay;
+		}
+
+		public function get parentDisplay():BitmapDisplay
+		{
+			return _parentDisplay;
+		}
+
+		public function set parentDisplay(value:BitmapDisplay):void
+		{
+			_parentDisplay = value;
+		}
+
 		public function set behavior(value: Behavior): void
 		{
 			if(value != null)
@@ -88,6 +111,13 @@ package com.xgame.common.display
 		
 		protected function updateActionAfter(): void
 		{
+			var item: BitmapDisplay;
+			for each(item in _childrenDisplay)
+			{
+				item.updateController();
+				item.render.render(item);
+				item.update();
+			}
 		}
 		
 		public function setBufferPos(x: Number = NaN, y: Number = NaN): void
@@ -144,6 +174,34 @@ package com.xgame.common.display
 		protected function rebuild(): void
 		{
 			setBufferPos();
+		}
+		
+		public function addDisplay(value: BitmapDisplay): void
+		{
+			if(_childrenDisplay.indexOf(value) >= 0)
+			{
+				return;
+			}
+			_childrenDisplay.push(value);
+			value.parentDisplay = this;
+			_childrenContainer.addChild(value);
+		}
+		
+		public function removeDisplay(value: BitmapDisplay): void
+		{
+			var index: int = _childrenDisplay.indexOf(value);
+			if(index >= 0)
+			{
+				if(_childrenContainer.contains(value))
+				{
+					_childrenContainer.removeChild(value);
+				}
+				
+				_childrenDisplay.splice(index, 1);
+				value.parentDisplay = null;
+//				value.dispose();
+//				value = null;
+			}
 		}
 
 		public function get graphic():ResourceData
