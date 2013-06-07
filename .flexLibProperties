@@ -47,7 +47,8 @@
     <classEntry path="com.xgame.common.display.EffectDisplay"/>
     <classEntry path="com.xgame.common.display.SingEffectDisplay"/>
     <classEntry path="com.xgame.events.SkillEvent"/>
-    <classEntry path="com.xgame.common.display.renders.EffectRender"/>
+    <classEntry path="com.xgame.common.display.SkillEffectDisplay"/>
+    <classEntry path="com.xgame.common.display.ExplodeSkillEffectDisplay"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

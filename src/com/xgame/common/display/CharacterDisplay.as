@@ -12,6 +12,7 @@ package com.xgame.common.display
 	
 	public class CharacterDisplay extends ActionDisplay implements IBattle
 	{
+		protected var _locker: BitmapDisplay;
 		protected var _attacker: *;
 		protected var _health: Number;
 		protected var _healthMax: Number;
@@ -258,6 +259,16 @@ package com.xgame.common.display
 		public function set characterLevel(value:uint):void
 		{
 			_characterLevel = value;
+		}
+
+		public function get locker():BitmapDisplay
+		{
+			return _locker;
+		}
+
+		public function set locker(value:BitmapDisplay):void
+		{
+			_locker = value;
 		}
 
 

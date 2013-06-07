@@ -21,6 +21,7 @@ package com.xgame.common.behavior
 	{
 		protected var _currentStep: uint;
 		protected var _path: Array;
+		protected var _skillTarget: *;
 		
 		public function MainPlayerBehavior()
 		{
@@ -56,7 +57,15 @@ package com.xgame.common.behavior
 		
 		private function onKeyDown(evt: KeyboardEvent): void
 		{
-			_skill.prepareSkill("16", this);
+			if((_target as IBattle).locker != null)
+			{
+				_skillTarget = (_target as IBattle).locker;
+			}
+			else
+			{
+				_skillTarget = Map.instance.getWorldPosition(Scene.instance.stage.mouseX, Scene.instance.stage.mouseY);
+			}
+			_skill.prepareSkill("skill1", _skillTarget);
 		}
 		
 		private function onMouseClick(evt: MouseEvent): void
@@ -70,6 +79,7 @@ package com.xgame.common.behavior
 			if(clicker != null)
 			{
 				//TODO 激活点击事件
+				(_target as CharacterDisplay).locker = clicker;
 				return;
 			}
 			

@@ -7,8 +7,6 @@ package com.xgame.common.display
 	
 	public class SingEffectDisplay extends EffectDisplay
 	{
-		protected var _owner: BitmapDisplay;
-		protected var _target: *;
 		protected var _skillId: String;
 		protected var _singTime: int;
 		
@@ -16,19 +14,10 @@ package com.xgame.common.display
 		{
 			super(null);
 			_skillId = skillId;
-			_target = target;
+			this.target = target;
 			_positionX = 0;
 			_positionY = 0;
-		}
-		
-		public function get owner():BitmapDisplay
-		{
-			return _owner;
-		}
-
-		public function set owner(value:BitmapDisplay):void
-		{
-			_owner = value;
+			_isLoop = true;
 		}
 
 		public function get singTime():int
@@ -38,24 +27,11 @@ package com.xgame.common.display
 
 		public function set singTime(value:int):void
 		{
-			var totalTime: Number = (_graphic.frameTotal / _graphic.fps) * 1000;
-			_graphic.fps = _graphic.frameTotal / (value / 1000);
-			
-			if(value < totalTime)
-			{
-				_graphic.fps = value;
-				updateFPS();
-			}
 			_singTime = GlobalContextConfig.Timer + value;
 		}
 		
 		override protected function step():Boolean
 		{
-			if(!super.step())
-			{
-				return false;
-			}
-			
 			if(GlobalContextConfig.Timer >= _singTime)
 			{
 				_isEnd = true;
@@ -64,8 +40,10 @@ package com.xgame.common.display
 				evt.skillId = _skillId;
 				evt.skillTarget = _target;
 				dispatchEvent(evt);
-				_owner.removeDisplay(this);
-//				Scene.instance.removeObject(this);
+			}
+			if(!super.step())
+			{
+				return false;
 			}
 			return true;
 		}

@@ -25,6 +25,8 @@ package com.xgame.common.display
 		function get attacker(): *;
 		function set attacker(value: *): void;
 		function get attackerPosition(): Point;
+		function get locker(): BitmapDisplay;
+		function set locker(value:BitmapDisplay):void;
 		function prepareAttack(o: *): void;
 		function attack(): void;
 		function underAttack(damage: Number): void;
