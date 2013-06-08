@@ -42,8 +42,6 @@ package com.xgame.common.display
 		{
 			super();
 			_childrenDisplay = new Vector.<BitmapDisplay>();
-			_childrenContainer = new Sprite;
-			addChild(_childrenContainer);
 			
 			_renderPos = TOP_LEFT;
 			_rect = new Rectangle();
@@ -52,6 +50,8 @@ package com.xgame.common.display
 			
 			_buffer = new Bitmap(null, "auto", true);
 			addChild(_buffer);
+			_childrenContainer = new Sprite;
+			addChild(_childrenContainer);
 			mouseChildren = false;
 			mouseEnabled = false;
 			
@@ -156,7 +156,8 @@ package com.xgame.common.display
 		{
 			if(_graphic != null)
 			{
-				_graphic.dispose();
+				//TODO 重新放回资源池而不是销毁
+//				_graphic.dispose();
 				_graphic = null;
 			}
 			
@@ -199,8 +200,8 @@ package com.xgame.common.display
 				
 				_childrenDisplay.splice(index, 1);
 				value.parentDisplay = null;
-//				value.dispose();
-//				value = null;
+				value.dispose();
+				value = null;
 			}
 		}
 

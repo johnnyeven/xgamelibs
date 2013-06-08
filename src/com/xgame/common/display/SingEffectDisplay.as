@@ -40,6 +40,15 @@ package com.xgame.common.display
 				evt.skillId = _skillId;
 				evt.skillTarget = _target;
 				dispatchEvent(evt);
+				
+				if(parentDisplay != null)
+				{
+					parentDisplay.removeDisplay(this);
+				}
+				else
+				{
+					Scene.instance.removeObject(this);
+				}
 			}
 			if(!super.step())
 			{

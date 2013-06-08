@@ -3,6 +3,7 @@ package com.xgame.core.skill
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.ExplodeSkillEffectDisplay;
 	import com.xgame.common.display.SingEffectDisplay;
+	import com.xgame.common.display.TrackEffectDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.core.scene.Scene;
@@ -11,6 +12,7 @@ package com.xgame.core.skill
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.geom.Point;
 	
 	public class SkillController implements IEventDispatcher
 	{
@@ -37,14 +39,27 @@ package com.xgame.core.skill
 			var effect: SingEffectDisplay = new SingEffectDisplay(skillId, target);
 			effect.owner = _target;
 			effect.graphic = ResourcePool.instance.getResourceData("assets.skill.prepareSkill");
-			effect.singTime = 3000;
+			effect.singTime = 1000;
 			effect.render = new Render();
-			effect.addEventListener(SkillEvent.SING_COMPLETE, showExplode, false, 0, true);
+			effect.addEventListener(SkillEvent.SING_COMPLETE, onFire, false, 0, true);
 			_target.addDisplay(effect);
 		}
 		
-		protected function showExplode(evt: SkillEvent): void
+		protected function onFire(evt: SkillEvent): void
 		{
+			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, onFire);
+			var tracker: TrackEffectDisplay = new TrackEffectDisplay(evt.skillId, evt.skillTarget, null, .1);
+			tracker.owner = _target;
+			tracker.startPosition = new Point(_target.positionX, _target.positionY);
+			tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
+			tracker.render = new Render();
+			tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
+			Scene.instance.addObject(tracker);
+		}
+		
+		protected function onExplode(evt: SkillEvent): void
+		{
+			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, onExplode);
 			var explode: ExplodeSkillEffectDisplay = new ExplodeSkillEffectDisplay(evt.skillId, evt.skillTarget);
 			explode.owner = _target;
 			explode.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_EXPLODE");

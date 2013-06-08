@@ -100,26 +100,5 @@ package com.xgame.common.display
 			}
 			return null;
 		}
-		
-		override protected function step():Boolean
-		{
-			if(!super.step())
-			{
-				return false;
-			}
-			
-			if(_isEnd)
-			{
-				if(parentDisplay != null)
-				{
-					parentDisplay.removeDisplay(this);
-				}
-				else
-				{
-					Scene.instance.removeObject(this);
-				}
-			}
-			return true;
-		}
 	}
 }

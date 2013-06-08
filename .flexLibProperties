@@ -49,6 +49,8 @@
     <classEntry path="com.xgame.events.SkillEvent"/>
     <classEntry path="com.xgame.common.display.SkillEffectDisplay"/>
     <classEntry path="com.xgame.common.display.ExplodeSkillEffectDisplay"/>
+    <classEntry path="com.xgame.common.display.TrackEffectDisplay"/>
+    <classEntry path="com.xgame.common.behavior.TrackSkillBehavior"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
