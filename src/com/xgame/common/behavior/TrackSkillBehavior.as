@@ -4,6 +4,7 @@ package com.xgame.common.behavior
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.TrackEffectDisplay;
 	import com.xgame.core.map.Map;
+	import com.xgame.core.physics.PhysicsElement;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.events.SkillEvent;
 	
@@ -15,10 +16,13 @@ package com.xgame.common.behavior
 		private var _yEnd: Boolean = false;
 		protected var _currentVelocity: Number;
 		protected var _velocity: Vector2D;
+		protected var _physics: PhysicsElement;
+		protected const MAX_VELOCITY: Number = 20;
 		
 		public function TrackSkillBehavior()
 		{
 			super();
+			_physics = new PhysicsElement(_target.positionX, _target.positionY);
 		}
 		
 		public function resetVelocity(): void
@@ -59,7 +63,10 @@ package com.xgame.common.behavior
 					_owner.dispatchEvent(evt);
 					Scene.instance.removeObject(_target);
 				}
-				_currentVelocity += .5;
+				if(_currentVelocity < MAX_VELOCITY)
+				{
+					_currentVelocity += .5;
+				}
 				_velocity.x = _owner.targetPosition.x - _target.positionX;
 				_velocity.y = _owner.targetPosition.y - _target.positionY;
 				_velocity.length = _currentVelocity;

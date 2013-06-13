@@ -105,9 +105,15 @@ package com.xgame.common.behavior
 			{
 				return;
 			}
-			
-			_endPoint.x = x;
-			_endPoint.y = y;
+			if(_endPoint == null)
+			{
+				_endPoint = new Point(x, y);
+			}
+			else
+			{
+				_endPoint.x = x;
+				_endPoint.y = y;
+			}
 			move();
 		}
 		

@@ -84,6 +84,7 @@ package com.xgame.common.behavior
 			}
 			
 			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
+			trace(_endPoint);
 			move();
 		}
 		
