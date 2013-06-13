@@ -53,6 +53,7 @@
     <classEntry path="com.xgame.common.behavior.TrackSkillBehavior"/>
     <classEntry path="com.xgame.core.physics.PhysicsElement"/>
     <classEntry path="com.xgame.core.physics.IPhysics"/>
+    <classEntry path="com.xgame.utils.debug.Debug"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

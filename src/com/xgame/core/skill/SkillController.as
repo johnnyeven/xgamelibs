@@ -48,9 +48,8 @@ package com.xgame.core.skill
 		protected function onFire(evt: SkillEvent): void
 		{
 			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, onFire);
-			var tracker: TrackEffectDisplay = new TrackEffectDisplay(evt.skillId, evt.skillTarget, null, .1);
+			var tracker: TrackEffectDisplay = new TrackEffectDisplay(evt.skillId, evt.skillTarget, new Point(_target.positionX, _target.positionY), .1);
 			tracker.owner = _target;
-			tracker.startPosition = new Point(_target.positionX, _target.positionY);
 			tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
 			tracker.render = new Render();
 			tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);

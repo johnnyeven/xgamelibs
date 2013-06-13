@@ -21,8 +21,11 @@ package com.xgame.core.physics
 		
 		public function step(): void
 		{
-			_velocity.x += _force.x;
-			_velocity.y += _force.y;
+			if(_velocity.length < MAX_VELOCITY)
+			{
+				_velocity.x += _force.x;
+				_velocity.y += _force.y;
+			}
 			
 			_x += _velocity.x;
 			_y += _velocity.y;
@@ -49,5 +52,17 @@ package com.xgame.core.physics
 			_force.x = x;
 			_force.y = y;
 		}
+
+		public function get velocity():Vector2D
+		{
+			return _velocity;
+		}
+
+		public function get force():Vector2D
+		{
+			return _force;
+		}
+
+
 	}
 }

@@ -13,16 +13,17 @@ package com.xgame.common.display
 		
 		public function TrackEffectDisplay(skillId:String, skillTarget: *, startPosition: Point = null, startVelocity: Number = 10)
 		{
-			super(skillId, new TrackSkillBehavior());
-			_isLoop = false;
-			target = skillTarget;
-			_startVelocity = startVelocity;
-			if(_startPosition != null)
+			super(skillId);
+			if(startPosition != null)
 			{
 				_startPosition = startPosition;
 				positionX = _startPosition.x;
 				positionY = _startPosition.y;
 			}
+			_isLoop = false;
+			target = skillTarget;
+			_startVelocity = startVelocity;
+			behavior = new TrackSkillBehavior();
 		}
 		
 		public function set startPosition(value: Point): void
