@@ -15,14 +15,16 @@ package com.xgame.common.behavior
 	{
 		private var _xEnd: Boolean = false;
 		private var _yEnd: Boolean = false;
+		protected var _launchPosition: uint;
 		protected var _velocity: Vector2D;
 		protected var _force: Vector2D;
 		protected var _physics: PhysicsElement;
 		protected const MAX_VELOCITY: Number = 50;
 		
-		public function TrackSkillBehavior()
+		public function TrackSkillBehavior(launchPosition: uint = 0)
 		{
 			super();
+			_launchPosition = launchPosition;
 		}
 		
 		override public function set target(value:BitmapDisplay):void
@@ -32,7 +34,7 @@ package com.xgame.common.behavior
 			_physics = new PhysicsElement(_target.positionX, _target.positionY);
 			resetVelocity();
 			_force = new Vector2D(_owner.targetPosition.x - _target.positionX, _owner.targetPosition.y - _target.positionY);
-			_force.length = 6;
+			_force.length = 3;
 			_physics.applyVelocity(_velocity.x, _velocity.y);
 			_physics.applyForce(_force.x, _force.y);
 		}
@@ -40,8 +42,26 @@ package com.xgame.common.behavior
 		public function resetVelocity(): void
 		{
 			var _owner: TrackEffectDisplay = _target as TrackEffectDisplay;
-			_velocity = new Vector2D(-10, -10);
-			Debug.info(this, _velocity);
+			if(_launchPosition == 0)
+			{
+				_velocity = new Vector2D(0, -10);
+			}
+			else if(_launchPosition == 1)
+			{
+				_velocity = new Vector2D(9.5, -3);
+			}
+			else if(_launchPosition == 2)
+			{
+				_velocity = new Vector2D(5.9, 8.1);
+			}
+			else if(_launchPosition == 3)
+			{
+				_velocity = new Vector2D(-5.9, 8.1);
+			}
+			else if(_launchPosition == 4)
+			{
+				_velocity = new Vector2D(-9.5, -3);
+			}
 		}
 		
 		override public function step():void

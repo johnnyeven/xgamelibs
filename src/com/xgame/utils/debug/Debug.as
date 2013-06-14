@@ -4,6 +4,7 @@ package com.xgame.utils.debug
 	
 	public class Debug
 	{
+		private static var _logId: uint = 1;
 		public static const LEVEL_INFO: Number = 0;
 		public static const LEVEL_WARNING: Number = 1;
 		public static const LEVEL_ERROR: Number = 2;
@@ -17,12 +18,14 @@ package com.xgame.utils.debug
 		{
 			var output: String;
 			output = 
+				_logId + ". " +
 				"[" + _levelArray[level] + "]" +
 				"[" + getClassName(sender) + " - " +
 				getCodePosition() + " - " +
 				getDate() + "]\n" + 
 				getContent(content);
 			trace(output);
+			_logId++;
 		}
 		
 		public static function info(sender: *, content: *): void

@@ -8,6 +8,7 @@ package com.xgame.core.skill
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.events.SkillEvent;
+	import com.xgame.utils.debug.Debug;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -48,16 +49,22 @@ package com.xgame.core.skill
 		protected function onFire(evt: SkillEvent): void
 		{
 			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, onFire);
-			var tracker: TrackEffectDisplay = new TrackEffectDisplay(evt.skillId, evt.skillTarget, new Point(_target.positionX, _target.positionY), .1);
-			tracker.owner = _target;
-			tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
-			tracker.render = new Render();
-			tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
-			Scene.instance.addObject(tracker);
+			
+			var tracker: TrackEffectDisplay;
+			for(var i: int = 0; i < 5; i++)
+			{
+				tracker = new TrackEffectDisplay(evt.skillId, evt.skillTarget, new Point(_target.positionX, _target.positionY), .1, i);
+				tracker.owner = _target;
+				tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
+				tracker.render = new Render();
+				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
+				Scene.instance.addObject(tracker);
+			}
 		}
 		
 		protected function onExplode(evt: SkillEvent): void
 		{
+			Debug.info(evt.currentTarget, evt.currentTarget.name);
 			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, onExplode);
 			var explode: ExplodeSkillEffectDisplay = new ExplodeSkillEffectDisplay(evt.skillId, evt.skillTarget);
 			explode.owner = _target;

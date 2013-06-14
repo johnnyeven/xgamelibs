@@ -11,7 +11,7 @@ package com.xgame.common.display
 		protected var _startPosition: Point;
 		protected var _startVelocity: Number;
 		
-		public function TrackEffectDisplay(skillId:String, skillTarget: *, startPosition: Point = null, startVelocity: Number = 10)
+		public function TrackEffectDisplay(skillId:String, skillTarget: *, startPosition: Point = null, startVelocity: Number = 10, launchPosition: uint = 0)
 		{
 			super(skillId);
 			if(startPosition != null)
@@ -23,7 +23,7 @@ package com.xgame.common.display
 			_isLoop = false;
 			target = skillTarget;
 			_startVelocity = startVelocity;
-			behavior = new TrackSkillBehavior();
+			behavior = new TrackSkillBehavior(launchPosition);
 		}
 		
 		public function set startPosition(value: Point): void
