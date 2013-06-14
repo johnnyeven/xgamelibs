@@ -55,6 +55,7 @@
     <classEntry path="com.xgame.core.physics.IPhysics"/>
     <classEntry path="com.xgame.utils.debug.Debug"/>
     <classEntry path="com.xgame.common.display.StatusEffectDisplay"/>
+    <classEntry path="com.xgame.core.center.HotkeyCenter"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

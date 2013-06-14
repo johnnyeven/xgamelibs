@@ -2,6 +2,7 @@ package com.xgame.core.scene
 {
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
+	import com.xgame.common.display.CharacterDisplay;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.Camera;
 	import com.xgame.core.map.Map;
@@ -29,7 +30,7 @@ package com.xgame.core.scene
 		protected var _mapGround: Shape;
 		protected var _stage: Stage;
 		protected var _initialized: Boolean = false;
-		protected var _player: ActionDisplay;
+		protected var _player: CharacterDisplay;
 		protected var _container: DisplayObjectContainer;
 		protected var _layerDisplay: Sprite;
 		protected var _layerEffect: Sprite;
@@ -200,7 +201,12 @@ package com.xgame.core.scene
 			return _container;
 		}
 		
-		public function get player(): ActionDisplay
+		public function set player(value: CharacterDisplay): void
+		{
+			_player = value;
+		}
+		
+		public function get player(): CharacterDisplay
 		{
 			return _player;
 		}
