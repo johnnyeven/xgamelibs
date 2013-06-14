@@ -1,8 +1,9 @@
 package com.xgame.core.skill
 {
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.ExplodeSkillEffectDisplay;
+	import com.xgame.common.display.AutoRemoveEffectDisplay;
 	import com.xgame.common.display.SingEffectDisplay;
+	import com.xgame.common.display.StatusEffectDisplay;
 	import com.xgame.common.display.TrackEffectDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
@@ -60,13 +61,18 @@ package com.xgame.core.skill
 				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
 				Scene.instance.addObject(tracker);
 			}
+//			var sheild: StatusEffectDisplay = new StatusEffectDisplay(evt.skillId, evt.skillTarget);
+//			sheild.owner = _target;
+//			sheild.graphic = ResourcePool.instance.getResourceData("assets.skill.sheild1");
+//			sheild.render = new Render();
+//			_target.addDisplay(sheild);
 		}
 		
 		protected function onExplode(evt: SkillEvent): void
 		{
 			Debug.info(evt.currentTarget, evt.currentTarget.name);
 			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, onExplode);
-			var explode: ExplodeSkillEffectDisplay = new ExplodeSkillEffectDisplay(evt.skillId, evt.skillTarget);
+			var explode: AutoRemoveEffectDisplay = new AutoRemoveEffectDisplay(evt.skillId, evt.skillTarget);
 			explode.owner = _target;
 			explode.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_EXPLODE");
 			explode.render = new Render();

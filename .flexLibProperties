@@ -48,12 +48,13 @@
     <classEntry path="com.xgame.common.display.SingEffectDisplay"/>
     <classEntry path="com.xgame.events.SkillEvent"/>
     <classEntry path="com.xgame.common.display.SkillEffectDisplay"/>
-    <classEntry path="com.xgame.common.display.ExplodeSkillEffectDisplay"/>
+    <classEntry path="com.xgame.common.display.AutoRemoveEffectDisplay"/>
     <classEntry path="com.xgame.common.display.TrackEffectDisplay"/>
     <classEntry path="com.xgame.common.behavior.TrackSkillBehavior"/>
     <classEntry path="com.xgame.core.physics.PhysicsElement"/>
     <classEntry path="com.xgame.core.physics.IPhysics"/>
     <classEntry path="com.xgame.utils.debug.Debug"/>
+    <classEntry path="com.xgame.common.display.StatusEffectDisplay"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

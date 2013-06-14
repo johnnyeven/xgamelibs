@@ -6,10 +6,10 @@ package com.xgame.common.display
 	
 	import flash.geom.Point;
 	
-	public class ExplodeSkillEffectDisplay extends SkillEffectDisplay
+	public class AutoRemoveEffectDisplay extends SkillEffectDisplay
 	{
 		
-		public function ExplodeSkillEffectDisplay(skillId:String, skillTarget: *)
+		public function AutoRemoveEffectDisplay(skillId:String, skillTarget: *)
 		{
 			super(skillId);
 			_isLoop = false;
