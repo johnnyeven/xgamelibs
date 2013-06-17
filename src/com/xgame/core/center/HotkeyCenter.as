@@ -1,6 +1,9 @@
 package com.xgame.core.center
 {
+	import com.xgame.core.scene.Scene;
+	
 	import flash.errors.IllegalOperationError;
+	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
 
 	public class HotkeyCenter extends BaseCenter
@@ -18,6 +21,7 @@ package com.xgame.core.center
 				return;
 			}
 			_id = new Dictionary();
+			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
 		}
 		
 		public static function get instance(): HotkeyCenter
@@ -31,15 +35,21 @@ package com.xgame.core.center
 			return _instance;
 		}
 		
-		public function bind(keyCode: int, id: String, process: Function): void
+		private function onKeyDown(evt: KeyboardEvent): void
 		{
-			addTrigger(keyCode, process);
+			var keyCode: int = evt.keyCode;
+			riseTrigger(keyCode, _id[keyCode]);
+		}
+		
+		public function bind(keyCode: int, id: String, processor: Class): void
+		{
+			addTrigger(keyCode, processor["execute"]);
 			_id[keyCode] = id;
 		}
 		
-		public function unbind(keyCode: int, id: String, process: Function): void
+		public function unbind(keyCode: int, id: String, processor: Class): void
 		{
-			removeTrigger(keyCode, process);
+			removeTrigger(keyCode, processor["execute"]);
 			_id[keyCode] = null;
 			delete _id[keyCode];
 		}

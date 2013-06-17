@@ -35,57 +35,6 @@ package com.xgame.core.skill
 		{
 			_target = value;
 		}
-		
-		public function prepareSkill(skillId: String, target: *): void
-		{
-			var effect: SingEffectDisplay = new SingEffectDisplay(skillId, target);
-			effect.owner = _target;
-			effect.graphic = ResourcePool.instance.getResourceData("assets.skill.prepareSkill");
-			effect.singTime = 1000;
-			effect.render = new Render();
-			effect.addEventListener(SkillEvent.SING_COMPLETE, onFire, false, 0, true);
-			_target.addDisplay(effect);
-		}
-		
-		protected function onFire(evt: SkillEvent): void
-		{
-			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, onFire);
-			
-			var tracker: TrackEffectDisplay;
-			for(var i: int = 0; i < 5; i++)
-			{
-				tracker = new TrackEffectDisplay(evt.skillId, evt.skillTarget, new Point(_target.positionX, _target.positionY), .1, i);
-				tracker.owner = _target;
-				tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
-				tracker.render = new Render();
-				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
-				Scene.instance.addObject(tracker);
-			}
-//			var sheild: StatusEffectDisplay = new StatusEffectDisplay(evt.skillId, evt.skillTarget);
-//			sheild.owner = _target;
-//			sheild.graphic = ResourcePool.instance.getResourceData("assets.skill.sheild1");
-//			sheild.render = new Render();
-//			_target.addDisplay(sheild);
-		}
-		
-		protected function onExplode(evt: SkillEvent): void
-		{
-			Debug.info(evt.currentTarget, evt.currentTarget.name);
-			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, onExplode);
-			var explode: AutoRemoveEffectDisplay = new AutoRemoveEffectDisplay(evt.skillId, evt.skillTarget);
-			explode.owner = _target;
-			explode.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_EXPLODE");
-			explode.render = new Render();
-			
-			if(evt.skillTarget is BitmapDisplay)
-			{
-				(evt.skillTarget as BitmapDisplay).addDisplay(explode);
-			}
-			else
-			{
-				Scene.instance.addObject(explode);
-			}
-		}
 
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{

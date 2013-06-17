@@ -34,13 +34,13 @@ package com.xgame.common.behavior
 		override public function installListener():void
 		{
 			Scene.instance.stage.addEventListener(MouseEvent.CLICK, onMouseClick, false, 0, true);
-			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
+//			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
 		}
 		
 		override public function uninstallListener():void
 		{
 			Scene.instance.stage.removeEventListener(MouseEvent.CLICK, onMouseClick);
-			Scene.instance.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+//			Scene.instance.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 		
 		public function clearPath(): void
@@ -55,18 +55,18 @@ package com.xgame.common.behavior
 			_currentStep = 1;
 		}
 		
-		private function onKeyDown(evt: KeyboardEvent): void
-		{
-			if((_target as IBattle).locker != null)
-			{
-				_skillTarget = (_target as IBattle).locker;
-			}
-			else
-			{
-				_skillTarget = Map.instance.getWorldPosition(Scene.instance.stage.mouseX, Scene.instance.stage.mouseY);
-			}
-			_skill.prepareSkill("skill1", _skillTarget);
-		}
+//		private function onKeyDown(evt: KeyboardEvent): void
+//		{
+//			if((_target as IBattle).locker != null)
+//			{
+//				_skillTarget = (_target as IBattle).locker;
+//			}
+//			else
+//			{
+//				_skillTarget = Map.instance.getWorldPosition(Scene.instance.stage.mouseX, Scene.instance.stage.mouseY);
+//			}
+//			_skill.prepareSkill("skill1", _skillTarget);
+//		}
 		
 		private function onMouseClick(evt: MouseEvent): void
 		{
