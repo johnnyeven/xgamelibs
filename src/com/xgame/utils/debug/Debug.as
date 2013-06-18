@@ -63,9 +63,9 @@ package com.xgame.utils.debug
 					break;
 				}
 			}
-			var reg: RegExp=/at\s+([^\/\$]+)\$?\/?(\w+)?\(\)([^.]+\.(\w+):(\d+))?/;
+			var reg: RegExp=/\s*at\s+([^\/\$]+)\$?\/?(set|get)?\s?(\w+)?\(\)([^.]+\.(\w+):(\d+))?/;
 			var result: Array = reg.exec(String(stack[i]));
-			return result[3];
+			return result[4];
 		}
 		
 		private static function getContent(content: *): String

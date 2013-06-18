@@ -109,6 +109,7 @@ package com.xgame.core.scene
 		private function onMapComplete(evt: MapEvent): void
 		{
 			_initialized = true;
+			GlobalContextConfig.Timer = getTimer();
 			dispatchEvent(new SceneEvent(SceneEvent.SCENE_READY));
 			_container.addChild(_mapGround);
 			_container.setChildIndex(_mapGround, 0);

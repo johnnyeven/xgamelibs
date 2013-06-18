@@ -4,6 +4,7 @@ package com.xgame.common.display
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.events.SkillEvent;
+	import com.xgame.utils.debug.Debug;
 	
 	public class SingEffectDisplay extends EffectDisplay
 	{
@@ -49,6 +50,7 @@ package com.xgame.common.display
 				{
 					Scene.instance.removeObject(this);
 				}
+				return true;
 			}
 			if(!super.step())
 			{
