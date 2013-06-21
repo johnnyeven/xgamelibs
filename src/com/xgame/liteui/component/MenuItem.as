@@ -11,7 +11,7 @@ package com.xgame.liteui.component
 	import com.xgame.utils.UIUtils;
 	import com.xgame.liteui.core.Component;
 	import com.xgame.liteui.layouts.Margin;
-	import utils.resource.ResourcePool;
+	import com.xgame.common.pool.ResourcePool;
 	
 	public class MenuItem extends Component
 	{
@@ -30,7 +30,7 @@ package com.xgame.liteui.component
 		{
 			if(_skin == null)
 			{
-				_skin = ResourcePool.getResource("ui.menu.itemBG") as DisplayObjectContainer;
+				_skin = ResourcePool.instance.getDisplayObject("ui.menu.itemBG") as DisplayObjectContainer;
 			}
 			super(_skin);
 			

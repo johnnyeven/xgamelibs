@@ -6,7 +6,6 @@ package com.xgame.core.skill
 	import com.xgame.common.display.StatusEffectDisplay;
 	import com.xgame.common.display.TrackEffectDisplay;
 	import com.xgame.common.display.renders.Render;
-	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.events.SkillEvent;
 	import com.xgame.utils.debug.Debug;

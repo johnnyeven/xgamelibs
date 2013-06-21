@@ -1,13 +1,13 @@
-package utils.liteui.component
+package com.xgame.liteui.component
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	
-	import utils.enum.ScrollBarOrientation;
-	import utils.liteui.core.Component;
-	import utils.liteui.layouts.HorizontalTileLayout;
-	import utils.liteui.layouts.Margin;
-	import utils.resource.ResourcePool;
+	import com.xgame.enum.ScrollBarOrientation;
+	import com.xgame.liteui.core.Component;
+	import com.xgame.liteui.layouts.HorizontalTileLayout;
+	import com.xgame.liteui.layouts.Margin;
+	import com.xgame.common.pool.ResourcePool;
 	
 	public class TreeView extends Component
 	{
@@ -22,7 +22,7 @@ package utils.liteui.component
 			
 			_container = new Container();
 			_container.layout = new HorizontalTileLayout(_container);
-			_scrollBar = getUIByDisplay(ScrollBar, ResourcePool.getResource("ui.VScrollBar")) as ScrollBar;
+			_scrollBar = getUIByDisplay(ScrollBar, ResourcePool.instance.getDisplayObject("ui.VScrollBar")) as ScrollBar;
 			_scrollBar.orientation = ScrollBarOrientation.VERTICAL;
 			_scrollBar.x = _container.contentWidth - _scrollBar.width;
 			_scrollBar.y = _container.y;

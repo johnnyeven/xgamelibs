@@ -1,4 +1,4 @@
-package utils.liteui.component
+package com.xgame.liteui.component
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -7,12 +7,12 @@ package utils.liteui.component
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import utils.StringUtils;
-	import utils.events.TreeEvent;
-	import utils.liteui.core.Component;
-	import utils.liteui.layouts.HorizontalTileLayout;
-	import utils.liteui.layouts.Margin;
-	import utils.resource.ResourcePool;
+	import com.xgame.utils.StringUtils;
+	import com.xgame.events.ui.TreeEvent;
+	import com.xgame.liteui.core.Component;
+	import com.xgame.liteui.layouts.HorizontalTileLayout;
+	import com.xgame.liteui.layouts.Margin;
+	import com.xgame.common.pool.ResourcePool;
 	
 	public class TreeNode extends Component
 	{
@@ -56,7 +56,7 @@ package utils.liteui.component
 				_rootNode = _root;
 			}
 			
-			_seperator = ResourcePool.getResource("ui.TreeView.Seperator");
+			_seperator = ResourcePool.instance.getDisplayObject("ui.TreeView.Seperator");
 			
 			addChild(_seperator);
 			
@@ -234,7 +234,7 @@ package utils.liteui.component
 			{
 				if(_listIcon == null)
 				{
-					_listIcon = ResourcePool.getResource("ui.TreeView.Icon");
+					_listIcon = ResourcePool.instance.getDisplayObject("ui.TreeView.Icon");
 					addChild(_listIcon);
 				}
 				_listIcon.x = 0;

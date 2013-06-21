@@ -4,6 +4,7 @@ package com.xgame.common.pool
 	import com.xgame.utils.Reflection;
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
@@ -79,6 +80,20 @@ package com.xgame.common.pool
 			if(_cache == null)
 			{
 				_cache = Reflection.createBitmapData(name, domain);
+				if(_cache != null)
+				{
+					add(name, _cache);
+				}
+			}
+			return _cache;
+		}
+		
+		public function getDisplayObject(name: String, domain: ApplicationDomain = null): DisplayObject
+		{
+			var _cache: DisplayObject = get(name) as DisplayObject;
+			if(_cache == null)
+			{
+				_cache = Reflection.createDisplayObject(name, domain);
 				if(_cache != null)
 				{
 					add(name, _cache);

@@ -3,7 +3,7 @@ package com.xgame.liteui.layouts
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	import utils.liteui.component.Container;
+	import com.xgame.liteui.component.Container;
 	
 	public class FlowLayout extends BaseLayout
 	{
