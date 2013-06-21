@@ -9,7 +9,7 @@ package com.xgame.utils.manager
 	import org.puremvc.as3.patterns.facade.Facade;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
-	import utils.GameManager;
+//	import utils.GameManager;
 
 	public class PopUpManager
 	{
@@ -38,7 +38,7 @@ package com.xgame.utils.manager
 				_modeIndex[popUp] = _transparency;
 			}
 			
-			GameManager.instance.addPopUp(popUp);
+//			GameManager.instance.addPopUp(popUp);
 		}
 		
 		public static function closeAll(zIndex: int): void
@@ -66,7 +66,7 @@ package com.xgame.utils.manager
 			{
 				return;
 			}
-			GameManager.instance.removePopUp(popUp);
+//			GameManager.instance.removePopUp(popUp);
 			delete popUpIndex[popUp];
 			if(_modeIndex[popUp] != null)
 			{
@@ -81,30 +81,30 @@ package com.xgame.utils.manager
 		{
 			var _transparency: Sprite = new Sprite();
 			_transparency.graphics.beginFill(0x000000, .7);
-			_transparency.graphics.drawRect(0, 0, GameManager.container.stageWidth, GameManager.container.stageHeight);
+//			_transparency.graphics.drawRect(0, 0, GameManager.container.stageWidth, GameManager.container.stageHeight);
 			_transparency.graphics.endFill();
-			GameManager.instance.addPopUp(_transparency);
+//			GameManager.instance.addPopUp(_transparency);
 			if(modeUseBlurFilter)
 			{
-				GameManager.instance.baseLayer.filters = [
-					new BlurFilter(blur, blur, BitmapFilterQuality.LOW)
-				];
+//				GameManager.instance.baseLayer.filters = [
+//					new BlurFilter(blur, blur, BitmapFilterQuality.LOW)
+//				];
 			}
 			return _transparency;
 		}
 		
 		public static function removeModeTrasparency(blur: uint, _transparency: Sprite): void
 		{
-			if(GameManager.instance.popUpLayer.contains(_transparency))
-			{
-				GameManager.instance.popUpLayer.removeChild(_transparency);
-				if(modeUseBlurFilter)
-				{
-					GameManager.instance.baseLayer.filters = [
-						new BlurFilter(blur, blur, BitmapFilterQuality.LOW)
-					];
-				}
-			}
+//			if(GameManager.instance.popUpLayer.contains(_transparency))
+//			{
+//				GameManager.instance.popUpLayer.removeChild(_transparency);
+//				if(modeUseBlurFilter)
+//				{
+//					GameManager.instance.baseLayer.filters = [
+//						new BlurFilter(blur, blur, BitmapFilterQuality.LOW)
+//					];
+//				}
+//			}
 		}
 		
 		public static function updateModeTransparencySize(): void
@@ -112,8 +112,8 @@ package com.xgame.utils.manager
 			var _transparency: DisplayObject;
 			for each(_transparency in _modeIndex)
 			{
-				_transparency.width = GameManager.container.stageWidth;
-				_transparency.height = GameManager.container.stageHeight;
+//				_transparency.width = GameManager.container.stageWidth;
+//				_transparency.height = GameManager.container.stageHeight;
 			}
 		}
 	}

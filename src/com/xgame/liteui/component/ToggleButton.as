@@ -1,4 +1,4 @@
-package utils.liteui.component
+package com.xgame.liteui.component
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;

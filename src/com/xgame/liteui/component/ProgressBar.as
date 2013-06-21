@@ -1,4 +1,4 @@
-package utils.liteui.component
+package com.xgame.liteui.component
 {
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Bounce;
@@ -9,8 +9,8 @@ package utils.liteui.component
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	
-	import utils.enum.ProgressBarType;
-	import utils.liteui.core.Component;
+	import com.xgame.enum.ProgressBarType;
+	import com.xgame.liteui.core.Component;
 	
 	public class ProgressBar extends Component
 	{

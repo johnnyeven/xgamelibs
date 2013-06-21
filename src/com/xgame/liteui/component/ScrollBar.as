@@ -1,4 +1,4 @@
-package utils.liteui.component
+package com.xgame.liteui.component
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
@@ -6,15 +6,15 @@ package utils.liteui.component
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import utils.GameManager;
-	import utils.MouseUtils;
-	import utils.UIUtils;
-	import utils.enum.ScrollBarOrientation;
-	import utils.enum.ScrollBarPolicy;
-	import utils.events.ScrollBarEvent;
-	import utils.events.ViewEvent;
-	import utils.liteui.core.Component;
-	import utils.liteui.core.IViewPort;
+	import com.xgame.core.scene.Scene;
+	import com.xgame.utils.MouseUtils;
+	import com.xgame.utils.UIUtils;
+	import com.xgame.enum.ScrollBarOrientation;
+	import com.xgame.enum.ScrollBarPolicy;
+	import com.xgame.events.ui.ScrollBarEvent;
+	import com.xgame.events.ui.ViewEvent;
+	import com.xgame.liteui.core.Component;
+	import com.xgame.liteui.core.IViewPort;
 	
 	public class ScrollBar extends Component
 	{
@@ -81,8 +81,8 @@ package utils.liteui.component
 		
 		protected function onBarMouseDown(evt: MouseEvent): void
 		{
-			GameManager.container.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			GameManager.container.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			Scene.instance.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			Scene.instance.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			_oldBarMouseDownPos = trackMousePosition;
 			_oldBarMousePos = barMousePosition;
 		}
@@ -115,8 +115,8 @@ package utils.liteui.component
 		
 		protected function onMouseUp(evt: MouseEvent): void
 		{
-			GameManager.container.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			GameManager.container.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			Scene.instance.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			Scene.instance.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
 		public function get orientation(): String
