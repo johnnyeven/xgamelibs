@@ -1,6 +1,7 @@
 package com.xgame.common.network.socket
 {
 	import com.xgame.events.net.SocketEvent;
+	import com.xgame.utils.debug.Debug;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.events.ProgressEvent;
@@ -103,8 +104,7 @@ package com.xgame.common.network.socket
 			}
 			if(_contentLength > 65534)
 			{
-				//TODO 改debug
-				trace("包过长，抛弃，包长度：" + _contentLength + "，上次协议号：" + _protocolId);
+				Debug.error(this, "包过长，抛弃，包长度：" + _contentLength + "，上次协议号：" + _protocolId);
 			}
 			if(data.bytesAvailable < _contentLength || _contentLength < 2)
 			{
