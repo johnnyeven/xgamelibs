@@ -1,5 +1,6 @@
 package com.xgame.utils
 {
+	import com.xgame.core.GameManager;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.liteui.core.Component;
 	
@@ -63,14 +64,14 @@ package com.xgame.utils
 		
 		private static function get stageCenter(): Point
 		{
-			var _stage: Stage = Scene.instance.stage;
+			var _stage: Stage = GameManager.container;
 			
 			return new Point(_stage.stageWidth / 2, _stage.stageHeight / 2);
 		}
 		
 		public static function componentCenterInStage(comp: DisplayObject, width: Number = NaN, height: Number = NaN): Point
 		{
-			var _stage: Stage = Scene.instance.stage;
+			var _stage: Stage = GameManager.container;
 			var _rect: Rectangle = comp.getBounds(comp);
 			
 			if(!isNaN(width))
