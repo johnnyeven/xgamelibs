@@ -23,5 +23,15 @@ package com.xgame.common.commands
 			}
 			return new _commandList[protocolId]();
 		}
+		
+		public function dispose(): void
+		{
+			for(var protocolId: String in _commandList)
+			{
+				_commandList[protocolId] = null;
+				delete _commandList[protocolId];
+			}
+			_commandList = null;
+		}
 	}
 }

@@ -166,6 +166,16 @@ package com.xgame.common.network.socket
 				dispatchEvent(new SocketEvent(SocketEvent.PING_REFRESH));
 			}
 		}
-
+		
+		public function dispose(): void
+		{
+			if(connected)
+			{
+				close();
+			}
+			removeEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+			_callback = null;
+			_instance = null;
+		}
 	}
 }

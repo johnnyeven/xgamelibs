@@ -44,5 +44,11 @@ package com.xgame.common.commands
 				delete _commandList[protocolId];
 			}
 		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+			_instance = null;
+		}
 	}
 }
