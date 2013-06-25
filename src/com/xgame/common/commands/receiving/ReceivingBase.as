@@ -8,6 +8,8 @@ package com.xgame.common.commands.receiving
 	
 	public class ReceivingBase extends CommandBase implements IReceiving
 	{
+		public var message: int;
+		
 		public function ReceivingBase(protocolId:uint)
 		{
 			super(protocolId);
@@ -15,6 +17,8 @@ package com.xgame.common.commands.receiving
 		
 		public function fill(data:ByteArray):void
 		{
+			message = data.readByte();
+			data.readShort();
 		}
 		
 		public function equals(value:IReceiving):Boolean

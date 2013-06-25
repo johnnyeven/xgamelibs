@@ -8,7 +8,7 @@ package com.xgame.core
 	import flash.events.Event;
 	
 	import com.xgame.liteui.core.Component;
-	import com.xgame.utils.MenuManager;
+	import com.xgame.utils.manager.MenuManager;
 	
 	public class GameManager extends Component
 	{

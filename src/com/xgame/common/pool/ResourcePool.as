@@ -88,9 +88,13 @@ package com.xgame.common.pool
 			return _cache;
 		}
 		
-		public function getDisplayObject(name: String, domain: ApplicationDomain = null): DisplayObject
+		public function getDisplayObject(name: String, domain: ApplicationDomain = null, cached: Boolean = true): DisplayObject
 		{
-			var _cache: DisplayObject = get(name) as DisplayObject;
+			var _cache: DisplayObject;
+			if(cached)
+			{
+				_cache = get(name) as DisplayObject;
+			}
 			if(_cache == null)
 			{
 				_cache = Reflection.createDisplayObject(name, domain);

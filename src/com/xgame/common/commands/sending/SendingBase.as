@@ -25,5 +25,10 @@ package com.xgame.common.commands.sending
 			_byteData.clear();
 			_byteData.writeShort(protocolId);
 		}
+		
+		public function get protocolName():String
+		{
+			return "SendingBase";
+		}
 	}
 }
