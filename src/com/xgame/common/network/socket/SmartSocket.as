@@ -66,7 +66,7 @@ package com.xgame.common.network.socket
 		private function onSocketData(evt: ProgressEvent): void
 		{
 			var _byteArray: ByteArray = new ByteArray();
-			_byteArray.endian = Endian.BIG_ENDIAN;
+			_byteArray.endian = Endian.LITTLE_ENDIAN;
 			readBytes(_byteArray, 0, bytesAvailable);
 			assembly(_byteArray);
 		}
@@ -74,7 +74,7 @@ package com.xgame.common.network.socket
 		private function assembly(data: ByteArray): void
 		{
 			var _byteArray: ByteArray = new ByteArray();
-			_byteArray.endian = Endian.BIG_ENDIAN;
+			_byteArray.endian = Endian.LITTLE_ENDIAN;
 			
 			if(_cache.length > 0)
 			{
@@ -106,19 +106,20 @@ package com.xgame.common.network.socket
 			{
 				Debug.error(this, "包过长，抛弃，包长度：" + _contentLength + "，上次协议号：" + _protocolId);
 			}
+			Debug.info(this, data);
 			if(data.bytesAvailable < _contentLength || _contentLength < 2)
 			{
 				_byteArray1 = new ByteArray();
-				_byteArray1.endian = Endian.BIG_ENDIAN;
+				_byteArray1.endian = Endian.LITTLE_ENDIAN;
 				data.readBytes(_byteArray1, 0, data.bytesAvailable);
 				_cache = _byteArray1;
 			}
 			else
 			{
 				_byteArray2 = new ByteArray();
-				_byteArray2.endian = Endian.BIG_ENDIAN;
+				_byteArray2.endian = Endian.LITTLE_ENDIAN;
 				_protocolId = data.readShort();
-				if(_contentLength - 2 > 0)
+ 				if(_contentLength - 2 > 0)
 				{
 					data.readBytes(_byteArray2, 0, _contentLength - 2);
 				}
@@ -134,7 +135,7 @@ package com.xgame.common.network.socket
 				if(data.bytesAvailable > 0)
 				{
 					_byteArray3 = new ByteArray();
-					_byteArray3.endian = Endian.BIG_ENDIAN;
+					_byteArray3.endian = Endian.LITTLE_ENDIAN;
 					data.readBytes(_byteArray3, 0, data.bytesAvailable);
 					assembly(_byteArray3);
 				}

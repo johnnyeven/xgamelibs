@@ -18,7 +18,6 @@ package com.xgame.common.commands.receiving
 		public function fill(data:ByteArray):void
 		{
 			message = data.readByte();
-			data.readShort();
 		}
 		
 		public function equals(value:IReceiving):Boolean

@@ -15,7 +15,7 @@ package com.xgame.common.commands
 		
 		public function getProtocol(protocolId: uint): IReceiving
 		{
-			if(_commandList[uint] == null)
+			if(_commandList[protocolId] == null)
 			{
 				//TODO 替换为debug
 				trace("收到一个不认识的协议号：" + protocolId);

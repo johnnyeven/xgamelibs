@@ -1,5 +1,6 @@
 package com.xgame.utils.debug
 {
+	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	
 	public class Debug
@@ -74,6 +75,10 @@ package com.xgame.utils.debug
 			{
 				return content;
 			}
+			else if(content is ByteArray)
+			{
+				return byteToHex(content as ByteArray);
+			}
 			try
 			{
 				return content.toString();
@@ -95,6 +100,27 @@ package com.xgame.utils.debug
 				d.getMinutes() + ":" +
 				d.getSeconds() + "," + 
 				d.getMilliseconds();
+		}
+		
+		private static function byteToHex(content: ByteArray): String
+		{
+			var hex: String = "";
+			var hexString: Array = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+			var low: uint;
+			var high: uint;
+			for(var i: uint = 0; i < content.length; i++)
+			{
+				low = content[i] & 0x0F;
+				high = content[i] >> 4;
+				
+				hex += "0x" + hexString[high] + hexString[low] + " ";
+				
+				if((i+1) % 10 == 0)
+				{
+					hex += "\n";
+				}
+			}
+			return hex;
 		}
 	}
 }
