@@ -39,5 +39,10 @@ package com.xgame.common.commands.receiving
 			}
 			return true;
 		}
+		
+		public function get protocolName():String
+		{
+			return "ReceivingBase";
+		}
 	}
 }

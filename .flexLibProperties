@@ -57,6 +57,9 @@
     <classEntry path="com.xgame.common.display.StatusEffectDisplay"/>
     <classEntry path="com.xgame.core.center.HotkeyCenter"/>
     <classEntry path="com.xgame.core.HotkeyTrigger"/>
+    <classEntry path="com.xgame.utils.Binary64"/>
+    <classEntry path="com.xgame.utils.Int64"/>
+    <classEntry path="com.xgame.utils.UInt64"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

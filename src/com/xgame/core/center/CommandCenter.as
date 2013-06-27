@@ -50,6 +50,11 @@ package com.xgame.core.center
 			return _instance;
 		}
 		
+		public function get connected(): Boolean
+		{
+			return _socket.connected;
+		}
+		
 		private function onClosed(event: Event): void
 		{
 			dispatchEvent(new CommandEvent(CommandEvent.CLOSED_EVENT));
