@@ -66,6 +66,8 @@ package com.xgame.configuration
 		public static const TYPE_STRING: int = 2;
 		public static const TYPE_FLOAT: int = 3;
 		public static const TYPE_BOOL: int = 4;
+		public static const TYPE_UINT: int = 5;
+		public static const TYPE_ULONG: int = 6;
 		
 		public static const ACK_CONFIRM: int = 1;
 		public static const ACK_ERROR: int = 0;
