@@ -1,5 +1,6 @@
 package com.xgame.core.center
 {
+	import com.xgame.core.GameManager;
 	import com.xgame.core.scene.Scene;
 	
 	import flash.errors.IllegalOperationError;
@@ -19,7 +20,8 @@ package com.xgame.core.center
 				throw new IllegalOperationError("不能直接实例化");
 				return;
 			}
-			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
+			
+			GameManager.container.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
 		}
 		
 		public static function get instance(): HotkeyCenter
