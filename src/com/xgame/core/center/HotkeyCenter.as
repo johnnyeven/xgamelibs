@@ -10,7 +10,6 @@ package com.xgame.core.center
 	{
 		private static var _instance: HotkeyCenter;
 		private static var _allowInstance: Boolean = false;
-		private var _id: Dictionary;
 		
 		public function HotkeyCenter()
 		{
@@ -20,7 +19,6 @@ package com.xgame.core.center
 				throw new IllegalOperationError("不能直接实例化");
 				return;
 			}
-			_id = new Dictionary();
 			Scene.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
 		}
 		
@@ -38,20 +36,17 @@ package com.xgame.core.center
 		private function onKeyDown(evt: KeyboardEvent): void
 		{
 			var keyCode: int = evt.keyCode;
-			riseTrigger(keyCode, _id[keyCode]);
+			riseTrigger(keyCode);
 		}
 		
-		public function bind(keyCode: int, id: String, processor: Class): void
+		public function bind(keyCode: int, processor: Class): void
 		{
 			addTrigger(keyCode, processor["execute"]);
-			_id[keyCode] = id;
 		}
 		
-		public function unbind(keyCode: int, id: String, processor: Class): void
+		public function unbind(keyCode: int, processor: Class): void
 		{
 			removeTrigger(keyCode, processor["execute"]);
-			_id[keyCode] = null;
-			delete _id[keyCode];
 		}
 	}
 }

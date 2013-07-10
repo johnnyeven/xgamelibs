@@ -50,7 +50,7 @@ package com.xgame.core.center
 			}
 		}
 		
-		protected function riseTrigger(key: Object, param: Object): void
+		protected function riseTrigger(key: Object, param: Object = null): void
 		{
 			var _item: Array = _trigger[key] as Array;
 			if(_item == null)
@@ -61,7 +61,14 @@ package com.xgame.core.center
 			var func: Function;
 			for each(func in _item)
 			{
-				func(param);
+				if(param != null)
+				{
+					func(param);
+				}
+				else
+				{
+					func();
+				}
 			}
 		}
 		
