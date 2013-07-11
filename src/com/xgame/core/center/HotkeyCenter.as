@@ -11,6 +11,7 @@ package com.xgame.core.center
 	{
 		private static var _instance: HotkeyCenter;
 		private static var _allowInstance: Boolean = false;
+		public static var GlobalEnabled: Boolean = true;
 		
 		public function HotkeyCenter()
 		{
@@ -37,8 +38,11 @@ package com.xgame.core.center
 		
 		private function onKeyDown(evt: KeyboardEvent): void
 		{
-			var keyCode: int = evt.keyCode;
-			riseTrigger(keyCode);
+			if(GlobalEnabled)
+			{
+				var keyCode: int = evt.keyCode;
+				riseTrigger(keyCode);
+			}
 		}
 		
 		public function bind(keyCode: int, processor: Class): void
