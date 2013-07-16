@@ -30,7 +30,7 @@ package com.xgame.common.network.socket
 				return;
 			}
 			_cache = new ByteArray();
-			_cache.endian = Endian.BIG_ENDIAN;
+//			_cache.endian = Endian.LITTLE_ENDIAN;
 			_commandList = new Dictionary();
 			_contentLength = 0;
 			_protocolId = 0;
@@ -66,7 +66,7 @@ package com.xgame.common.network.socket
 		private function onSocketData(evt: ProgressEvent): void
 		{
 			var _byteArray: ByteArray = new ByteArray();
-			_byteArray.endian = Endian.LITTLE_ENDIAN;
+//			_byteArray.endian = Endian.LITTLE_ENDIAN;
 			readBytes(_byteArray, 0, bytesAvailable);
 			assembly(_byteArray);
 		}
@@ -74,7 +74,7 @@ package com.xgame.common.network.socket
 		private function assembly(data: ByteArray): void
 		{
 			var _byteArray: ByteArray = new ByteArray();
-			_byteArray.endian = Endian.LITTLE_ENDIAN;
+//			_byteArray.endian = Endian.LITTLE_ENDIAN;
 			
 			if(_cache.length > 0)
 			{
@@ -110,14 +110,14 @@ package com.xgame.common.network.socket
 			if(data.bytesAvailable < _contentLength || _contentLength < 2)
 			{
 				_byteArray1 = new ByteArray();
-				_byteArray1.endian = Endian.LITTLE_ENDIAN;
+//				_byteArray1.endian = Endian.LITTLE_ENDIAN;
 				data.readBytes(_byteArray1, 0, data.bytesAvailable);
 				_cache = _byteArray1;
 			}
 			else
 			{
 				_byteArray2 = new ByteArray();
-				_byteArray2.endian = Endian.LITTLE_ENDIAN;
+//				_byteArray2.endian = Endian.LITTLE_ENDIAN;
 				_protocolId = data.readShort();
  				if(_contentLength - 2 > 0)
 				{
@@ -135,7 +135,7 @@ package com.xgame.common.network.socket
 				if(data.bytesAvailable > 0)
 				{
 					_byteArray3 = new ByteArray();
-					_byteArray3.endian = Endian.LITTLE_ENDIAN;
+//					_byteArray3.endian = Endian.LITTLE_ENDIAN;
 					data.readBytes(_byteArray3, 0, data.bytesAvailable);
 					assembly(_byteArray3);
 				}
