@@ -44,6 +44,7 @@ package com.xgame.configuration
 		public static const ACTION_REQUEST_CHARACTER: int = 4;
 		public static const ACTION_REGISTER_CHARACTER: int = 5;
 		public static const ACTION_REQUEST_HOTKEY: int = 6;
+		public static const ACTION_BIND_SESSION: int = 7;
 		public static const ACTION_LOGOUT: int = 8;
 		
 		public static const TYPE_INT: int = 0;
