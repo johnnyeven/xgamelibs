@@ -35,6 +35,11 @@ package com.xgame.configuration
 		 */
 		public static var auth_key: String;
 		
+		public static const CONTROLLER_SCENE: int = 5;
+		public static const CONTROLLER_BASE: int = 4;
+		public static const CONTROLLER_BATTLE: int = 3;
+		public static const CONTROLLER_MSG: int = 2;
+		public static const CONTROLLER_MOVE: int = 1;
 		public static const CONTROLLER_INFO: int = 0
 		//INFO
 		public static const ACTION_CAMERAVIEW_OBJECT_LIST: int = 0;
@@ -46,6 +51,8 @@ package com.xgame.configuration
 		public static const ACTION_REQUEST_HOTKEY: int = 6;
 		public static const ACTION_BIND_SESSION: int = 7;
 		public static const ACTION_LOGOUT: int = 8;
+		//SCENE
+		public static const ACTION_VERIFY_MAP: int = 0;
 		
 		public static const TYPE_INT: int = 0;
 		public static const TYPE_LONG: int = 1;

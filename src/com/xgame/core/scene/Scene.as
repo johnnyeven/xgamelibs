@@ -30,6 +30,7 @@ package com.xgame.core.scene
 		protected var _mapGround: Shape;
 		protected var _stage: Stage;
 		protected var _initialized: Boolean = false;
+		protected var _ready: Boolean = false;
 		protected var _player: CharacterDisplay;
 		protected var _container: DisplayObjectContainer;
 		protected var _layerDisplay: Sprite;
@@ -63,6 +64,7 @@ package com.xgame.core.scene
 				_container.addChild(_layerEffect);
 				
 				initializeBuffer();
+				_initialized = true;
 			}
 			else
 			{
@@ -108,11 +110,11 @@ package com.xgame.core.scene
 		
 		private function onMapComplete(evt: MapEvent): void
 		{
-			_initialized = true;
 			GlobalContextConfig.Timer = getTimer();
 			dispatchEvent(new SceneEvent(SceneEvent.SCENE_READY));
 			_container.addChild(_mapGround);
 			_container.setChildIndex(_mapGround, 0);
+			_ready = true;
 		}
 		
 		public function addObject(value: BitmapDisplay): void
@@ -195,6 +197,11 @@ package com.xgame.core.scene
 		public function get initialized(): Boolean
 		{
 			return _initialized;
+		}
+		
+		public function get ready():Boolean
+		{
+			return _ready;
 		}
 		
 		public function get container(): DisplayObjectContainer
@@ -357,5 +364,6 @@ package com.xgame.core.scene
 		{
 			return _eventDispatcher.willTrigger(type);
 		}
+
 	}
 }
