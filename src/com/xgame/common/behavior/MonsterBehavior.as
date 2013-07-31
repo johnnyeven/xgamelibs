@@ -3,7 +3,7 @@ package com.xgame.common.behavior
 	import com.xgame.common.Vector2D;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.CharacterDisplay;
+	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.common.display.IBattle;
 	import com.xgame.common.display.MonsterDisplay;
 	import com.xgame.core.map.Map;

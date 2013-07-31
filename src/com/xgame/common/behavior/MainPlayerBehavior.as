@@ -3,7 +3,7 @@ package com.xgame.common.behavior
 	import com.xgame.common.Vector2D;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.CharacterDisplay;
+	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.common.display.IBattle;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
@@ -64,7 +64,7 @@ package com.xgame.common.behavior
 			if(clicker != null)
 			{
 				//TODO 激活点击事件
-				(_target as CharacterDisplay).locker = clicker;
+				(_target as MainPlayerDisplay).locker = clicker;
 				return;
 			}
 			
@@ -122,7 +122,7 @@ package com.xgame.common.behavior
 		
 		public function moveKeepDistance(x: Number, y: Number, distance: Number = -1): void
 		{
-			var _this: CharacterDisplay = _target as CharacterDisplay;
+			var _this: MainPlayerDisplay = _target as MainPlayerDisplay;
 			if(_this.attacker != null)
 			{
 				if(Perception.getDistanceByPoint(_this, _this.attackerPosition) <= distance)
@@ -291,7 +291,7 @@ package com.xgame.common.behavior
 		
 		private function getNearestPathIndex(node: Array, x: Number, y: Number, distance: Number): int
 		{
-			var _this: CharacterDisplay = _target as CharacterDisplay;
+			var _this: MainPlayerDisplay = _target as MainPlayerDisplay;
 			var _point: Point;
 			for(var i: int = node.length - 1; i >= 0; i--)
 			{

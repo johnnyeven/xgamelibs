@@ -51,16 +51,17 @@ package com.xgame.configuration
 		public static const ACTION_REQUEST_HOTKEY: int = 6;
 		public static const ACTION_BIND_SESSION: int = 7;
 		public static const ACTION_LOGOUT: int = 8;
-		//SCENE
+		//BASE
 		public static const ACTION_VERIFY_MAP: int = 0;
+		//SCENE
+		public static const ACTION_SHOW_PLAYER: int = 0;
 		
 		public static const TYPE_INT: int = 0;
 		public static const TYPE_LONG: int = 1;
 		public static const TYPE_STRING: int = 2;
 		public static const TYPE_FLOAT: int = 3;
 		public static const TYPE_BOOL: int = 4;
-		public static const TYPE_UINT: int = 5;
-		public static const TYPE_ULONG: int = 6;
+		public static const TYPE_DOUBLE: int = 5;
 		
 		public static const ACK_CONFIRM: int = 1;
 		public static const ACK_ERROR: int = 0;

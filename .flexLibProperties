@@ -40,7 +40,7 @@
     <classEntry path="com.xgame.common.behavior.MainPlayerBehavior"/>
     <classEntry path="com.xgame.common.display.IBattle"/>
     <classEntry path="com.xgame.utils.Angle"/>
-    <classEntry path="com.xgame.common.display.CharacterDisplay"/>
+    <classEntry path="com.xgame.common.display.MainPlayerDisplay"/>
     <classEntry path="com.xgame.events.BehaviorEvent"/>
     <classEntry path="com.xgame.common.display.MonsterDisplay"/>
     <classEntry path="com.xgame.core.skill.SkillController"/>

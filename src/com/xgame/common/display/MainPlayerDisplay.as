@@ -10,7 +10,7 @@ package com.xgame.common.display
 	
 	import flash.geom.Point;
 	
-	public class CharacterDisplay extends ActionDisplay implements IBattle
+	public class MainPlayerDisplay extends ActionDisplay implements IBattle
 	{
 		protected var _locker: BitmapDisplay;
 		protected var _attacker: *;
@@ -27,7 +27,7 @@ package com.xgame.common.display
 		protected var _characterName: String;
 		protected var _characterLevel: uint;
 		
-		public function CharacterDisplay()
+		public function MainPlayerDisplay()
 		{
 			super(new MainPlayerBehavior());
 			canBeAttack = true;
