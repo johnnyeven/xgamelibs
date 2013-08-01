@@ -162,7 +162,7 @@ package com.xgame.common.display
 			_bitmapDictionary[action] = prepareBitmapArray();
 			_actionDataDictionary[action] = new ActionData(action, frameTotal, frameLine, fps);
 //			_bitmap.dispose();
-			_bitmap = null;
+//			_bitmap = null;
 		}
 		
 		/**
