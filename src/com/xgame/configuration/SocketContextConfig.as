@@ -41,6 +41,9 @@ package com.xgame.configuration
 		public static const CONTROLLER_MSG: int = 2;
 		public static const CONTROLLER_MOVE: int = 1;
 		public static const CONTROLLER_INFO: int = 0
+		//MOVE
+		public static const ACTION_REQUEST_FINDPATH: int = 0;
+		public static const ACTION_VERIFY_MOVE: int = 1;
 		//INFO
 		public static const ACTION_LOGIN: int = 0;
 		public static const ACTION_LOGOUT: int = 1;
@@ -66,6 +69,8 @@ package com.xgame.configuration
 		public static const ACK_CONFIRM: int = 1;
 		public static const ACK_ERROR: int = 0;
 		public static const ORDER_CONFIRM: int = 2;
+		//MOVE
+		public static const REQUEST_FIND_PATH: int = ACTION_REQUEST_FINDPATH << 8 | CONTROLLER_MOVE;
 		//INFO
 		public static const QUICK_START: int = ACTION_QUICK_START << 8 | CONTROLLER_INFO;
 		public static const REQUEST_ACCOUNT_ROLE: int = ACTION_REQUEST_CHARACTER << 8 | CONTROLLER_INFO;
