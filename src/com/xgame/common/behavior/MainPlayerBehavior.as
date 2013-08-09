@@ -3,13 +3,14 @@ package com.xgame.common.behavior
 	import com.xgame.common.Vector2D;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
-	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.common.display.IBattle;
+	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.core.skill.SkillController;
 	import com.xgame.enum.Action;
 	import com.xgame.events.BehaviorEvent;
+	import com.xgame.events.scene.InteractionEvent;
 	import com.xgame.utils.Angle;
 	
 	import flash.display.Sprite;
@@ -68,8 +69,13 @@ package com.xgame.common.behavior
 				return;
 			}
 			
-			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
-			move();
+			var e: InteractionEvent = new InteractionEvent(InteractionEvent.SCENE_CLICK);
+			e.clicker = clicker;
+			e.stageX = evt.stageX;
+			e.stageY = evt.stageY;
+			dispatchEvent(e);
+//			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
+//			move();
 		}
 		
 		protected function move(): Boolean
