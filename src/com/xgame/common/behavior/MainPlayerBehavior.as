@@ -12,6 +12,7 @@ package com.xgame.common.behavior
 	import com.xgame.events.BehaviorEvent;
 	import com.xgame.events.scene.InteractionEvent;
 	import com.xgame.utils.Angle;
+	import com.xgame.utils.debug.Debug;
 	
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
@@ -74,11 +75,11 @@ package com.xgame.common.behavior
 			e.stageX = evt.stageX;
 			e.stageY = evt.stageY;
 			dispatchEvent(e);
-//			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
+			_endPoint = Map.instance.getWorldPosition(evt.stageX, evt.stageY);
 //			move();
 		}
 		
-		protected function move(): Boolean
+		public function move(node: Array): Boolean
 		{
 			if(_path == null)
 			{
@@ -91,36 +92,26 @@ package com.xgame.common.behavior
 			
 			var _point1: Point;
 			var _point2: Point;
-			if(Map.instance.astar == null)
+			_point1 = Map.instance.worldPosition2Block(_endPoint.x, _endPoint.y);
+			if(Map.instance.negativePath[_point1.y][_point1.x])
 			{
-				_point1 = Map.instance.worldPosition2Block(_target.positionX, _target.positionY);
-				_path.push([_point1.x, _point1.y]);
-				_point2 = Map.instance.worldPosition2Block(_endPoint.x, _endPoint.y);
-				_path.push([_point2.x, _point2.y]);
+				(_target as ActionDisplay).action = Action.STOP;
+				return false;
+			}
+			
+			if(node == null)
+			{
+				(_target as ActionDisplay).action = Action.STOP;
+				return false;
 			}
 			else
 			{
-				_point1 = Map.instance.worldPosition2Block(_endPoint.x, _endPoint.y);
-				if(Map.instance.negativePath[_point1.y][_point1.x])
+				for(var i: int = 0; i < node.length; i++)
 				{
-					(_target as ActionDisplay).action = Action.STOP;
-					return false;
-				}
-				
-				var node: Array = Map.instance.astar.find(_target.positionX, _target.positionY, _endPoint.x, _endPoint.y);
-				if(node == null)
-				{
-					(_target as ActionDisplay).action = Action.STOP;
-					return false;
-				}
-				else
-				{
-					for(var i: int = 0; i < node.length; i++)
-					{
-						_path.push([node[i].x, node[i].y]);
-					}
+					_path.push([node[i].x, node[i].y]);
 				}
 			}
+
 			_currentStep = 1;
 			
 			return true;
@@ -144,7 +135,7 @@ package com.xgame.common.behavior
 			_endPoint = new Point(x, y);
 			if(distance <= 0)
 			{
-				move();
+//				move();
 				return;
 			}
 			
