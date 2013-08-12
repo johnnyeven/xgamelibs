@@ -106,7 +106,7 @@ package com.xgame.common.network.socket
 			{
 				Debug.error(this, "包过长，抛弃，包长度：" + _contentLength + "，上次协议号：" + _protocolId);
 			}
-			Debug.info(this, data);
+//			Debug.info(this, data);
 			if(data.bytesAvailable < _contentLength || _contentLength < 2)
 			{
 				_byteArray1 = new ByteArray();
