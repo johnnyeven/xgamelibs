@@ -10,6 +10,7 @@ package com.xgame.configuration
 	 */
 	public final class GlobalContextConfig 
 	{
+		public static var FrameRate: int = 30;
 		public static var GameId: int = 1001;
 		public static var container: DisplayObjectContainer;
 		/**
