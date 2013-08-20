@@ -6,5 +6,6 @@ package com.xgame.common.interfaces.protocols
 	{
 		function get byteData(): ByteArray;
 		function fill(): void;
+		function fillTimestamp(): void;
 	}
 }

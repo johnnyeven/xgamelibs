@@ -2,6 +2,7 @@ package com.xgame.common.commands.receiving
 {
 	import com.xgame.common.commands.CommandBase;
 	import com.xgame.common.interfaces.protocols.IReceiving;
+	import com.xgame.utils.Int64;
 	
 	import flash.utils.ByteArray;
 	import flash.utils.describeType;
@@ -9,6 +10,7 @@ package com.xgame.common.commands.receiving
 	public class ReceivingBase extends CommandBase implements IReceiving
 	{
 		public var message: int;
+		public var timestamp: Int64;
 		
 		public function ReceivingBase(protocolId:uint)
 		{
@@ -38,6 +40,13 @@ package com.xgame.common.commands.receiving
 				}
 			}
 			return true;
+		}
+		
+		public function fillTimestamp(data: ByteArray): void
+		{
+			timestamp = new Int64();
+			timestamp.low = data.readUnsignedInt();
+			timestamp.high = data.readInt();
 		}
 		
 		public function get protocolName():String

@@ -108,6 +108,7 @@ package com.xgame.core.center
 		public function send(protocol: ISending): void
 		{
 			protocol.fill();
+			protocol.fillTimestamp();
 			_socket.send(protocol.byteData);
 		}
 		

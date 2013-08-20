@@ -179,6 +179,19 @@ package com.xgame.core.scene
 			return _objectList[value] as BitmapDisplay;
 		}
 		
+		public function getDisplayByGuid(value: String): BitmapDisplay
+		{
+			var display: BitmapDisplay;
+			for each(display in _objectList)
+			{
+				if(display.objectId == value)
+				{
+					return display;
+				}
+			}
+			return null;
+		}
+		
 		public function get objectList(): Array
 		{
 			return _objectList;
