@@ -14,8 +14,6 @@ package com.xgame.common.behavior
 	import com.xgame.utils.Angle;
 	import com.xgame.utils.debug.Debug;
 	
-	import flash.display.Sprite;
-	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 
