@@ -92,6 +92,7 @@ package com.xgame.core.center
 				return;
 			}
 			_protocol.fill(data);
+			_protocol.fillTimestamp(data);
 			riseTrigger(protocolId, _protocol);
 		}
 		

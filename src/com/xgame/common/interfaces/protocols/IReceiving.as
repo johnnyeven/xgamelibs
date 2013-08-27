@@ -5,6 +5,7 @@ package com.xgame.common.interfaces.protocols
 	public interface IReceiving
 	{
 		function fill(data: ByteArray): void;
+		function fillTimestamp(data: ByteArray): void;
 		function equals(value: IReceiving): Boolean;
 	}
 }
